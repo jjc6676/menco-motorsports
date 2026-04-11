@@ -1,337 +1,338 @@
 ---
-import Base from '../layouts/Base.astro';
-import { getCollection } from 'astro:content';
-import merchData from '../data/merch.json';
+import Layout from '../layouts/Layout.astro';
+import { getFeaturedProducts } from '../data/products';
 
-const allServices = await getCollection('services');
-const services = allServices
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 4);
+const featuredProducts = getFeaturedProducts();
+const formatPrice = (price: number) =>
+  new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price);
 
-const merch = merchData.slice(0, 3);
+const serviceHighlights = [
+  {
+    title: 'Diagnostics & Repair',
+    description:
+      'Pinpoint drivability issues, warning lights, hard starts, fuel-system problems, electrical faults, and recurring failures before they turn into expensive downtime.',
+  },
+  {
+    title: 'Performance Upgrades',
+    description:
+      'Build a stronger, more responsive truck with airflow, fueling, turbo, and supporting modifications matched to how you work, tow, and drive.',
+  },
+  {
+    title: 'Fleet & Work Truck Support',
+    description:
+      'Keep business-critical trucks on the road with dependable service planning, honest recommendations, and repairs focused on reliability first.',
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      'Straight shooters who know diesel trucks. They found an issue another shop missed and got my work truck back on the road fast.',
+    name: 'Local business owner',
+  },
+  {
+    quote:
+      'You can tell they actually care about doing the job right. No fluff, no runaround, just solid work and clear communication.',
+    name: 'Powerstroke owner',
+  },
+  {
+    quote:
+      'Menco helped me plan upgrades the right way instead of overselling parts I did not need. Truck runs stronger and more reliably now.',
+    name: 'Duramax customer',
+  },
+];
+
+const faqs = [
+  {
+    question: 'What trucks do you work on?',
+    answer:
+      'Menco Motorsports specializes in diesel pickups and work trucks, with a strong focus on Powerstroke, Duramax, and Cummins platforms.',
+  },
+  {
+    question: 'Do you handle both repair and performance work?',
+    answer:
+      'Yes. We handle diesel diagnostics, repair, maintenance support, and performance-focused upgrades. Every recommendation is based on your goals and the condition of the truck.',
+  },
+  {
+    question: 'Can you help with a truck that is used for towing or work every day?',
+    answer:
+      'Absolutely. Reliability matters most for work and towing trucks, so we focus on solutions that improve durability, drivability, and long-term confidence.',
+  },
+  {
+    question: 'How do I get started?',
+    answer:
+      'Use the contact page or call the shop to discuss your truck, the symptoms you are seeing, and whether you need repair, diagnostics, or performance planning.',
+  },
+];
 ---
 
-<Base
-  title="Menco Motorsports | Diesel Performance & Repair in Lafayette, LA"
-  description="Lafayette's trusted diesel repair and performance shop. Specializing in truck repair, performance upgrades, diagnostics, and more."
+<Layout
+  title="Home"
+  description="Menco Motorsports in Lafayette, Louisiana delivers diesel diagnostics, repair, and performance work for Powerstroke, Duramax, and Cummins trucks."
 >
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-inner container">
-      <div class="hero-content">
-        <span class="hero-badge">Lafayette, LA</span>
-        <h1>Diesel Performance & Repair <span class="accent">Done Right.</span></h1>
-        <p class="hero-sub">
-          From routine maintenance to full performance builds, Menco Motorsports keeps your diesel running strong. Trusted by truck owners across Acadiana.
+  <section class="relative overflow-hidden border-b border-white/10 bg-brand-black">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(204,0,0,0.2),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_65%)]"></div>
+    <div class="absolute inset-y-0 right-0 hidden lg:block w-1/2 bg-[linear-gradient(135deg,rgba(204,0,0,0.15),transparent_45%),repeating-linear-gradient(90deg,rgba(255,255,255,0.05)_0,rgba(255,255,255,0.05)_1px,transparent_1px,transparent_56px)] opacity-70"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 lg:py-32">
+      <div class="max-w-3xl">
+        <p class="font-body text-sm md:text-base uppercase tracking-[0.35em] text-brand-red">
+          Lafayette, Louisiana Diesel Specialists
         </p>
-        <div class="hero-ctas">
-          <a href="tel:+13372886226" class="btn btn-primary">Call (337) 288-6226</a>
-          <a href="/services" class="btn btn-secondary">View Services</a>
+        <h1 class="mt-5 font-heading text-6xl sm:text-7xl lg:text-8xl leading-none text-brand-light uppercase">
+          Repair. Performance. Reliability.
+        </h1>
+        <span class="red-accent-line"></span>
+        <p class="max-w-2xl text-base sm:text-lg md:text-xl text-brand-gray leading-relaxed">
+          Menco Motorsports serves diesel truck owners who depend on their equipment. From accurate diagnostics and repair to well-planned performance upgrades, we build dependable solutions for Powerstroke, Duramax, and Cummins trucks.
+        </p>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-4">
+          <a href="/services" class="btn-red">Explore Services</a>
+          <a href="/about" class="btn-outline">Why Menco</a>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl">
+          <div class="card p-5">
+            <p class="font-heading text-3xl text-brand-light">Powerstroke</p>
+            <p class="mt-2 text-sm text-brand-gray">Ford diesel repair, diagnostics, and upgrade planning for trucks that have to perform.</p>
+          </div>
+          <div class="card p-5">
+            <p class="font-heading text-3xl text-brand-light">Duramax</p>
+            <p class="mt-2 text-sm text-brand-gray">GM diesel service and performance support focused on real-world drivability and dependability.</p>
+          </div>
+          <div class="card p-5">
+            <p class="font-heading text-3xl text-brand-light">Cummins</p>
+            <p class="mt-2 text-sm text-brand-gray">Ram diesel expertise for work trucks, tow rigs, and builds that need a smarter path forward.</p>
+          </div>
         </div>
       </div>
-      <div class="hero-image">
-        <img src="/images/hero.jpg" alt="Menco Motorsports mechanic working on a diesel truck engine in Lafayette, LA" loading="eager" />
-      </div>
     </div>
   </section>
 
-  <!-- Services Preview -->
-  <section class="section-alt services-section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-line"></div>
-        <h2>Our Services</h2>
+  <section class="py-20 bg-brand-dark/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <p class="font-body uppercase tracking-[0.3em] text-sm text-brand-red">Core Services</p>
+        <h2 class="section-heading mt-4">Built for diesel trucks that need to work</h2>
+        <p class="section-subheading max-w-3xl">
+          Whether you are chasing a fault, restoring reliability, or planning a stronger setup, Menco Motorsports approaches each truck with a practical, performance-minded process.
+        </p>
       </div>
-      <div class="services-grid">
-        {services.map((service) => (
-          <div class="service-card">
-            <h3>{service.data.title}</h3>
-            <p>{service.data.description}</p>
-          </div>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        {serviceHighlights.map((service) => (
+          <article class="card p-6 h-full flex flex-col">
+            <p class="font-heading text-3xl text-brand-light uppercase">{service.title}</p>
+            <span class="red-accent-line"></span>
+            <p class="text-brand-gray leading-relaxed text-sm md:text-base flex-1">{service.description}</p>
+          </article>
         ))}
       </div>
-      <div class="section-footer">
-        <a href="/services" class="btn btn-secondary">View All Services</a>
+
+      <div class="mt-10">
+        <a href="/services" class="btn-outline">See All Services</a>
       </div>
     </div>
   </section>
 
-  <!-- CTA Strip -->
-  <section class="cta-strip">
-    <div class="container cta-strip-inner">
-      <h2>Ready to get your truck running right?</h2>
-      <p>Give us a call or stop by the shop. Walk-ins welcome, appointments preferred.</p>
-      <a href="tel:+13372886226" class="btn cta-strip-btn">Call (337) 288-6226</a>
-    </div>
-  </section>
-
-  <!-- Merch Preview -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-line"></div>
-        <h2>Merch</h2>
+  <section class="py-20 bg-brand-black border-y border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div class="max-w-2xl">
+          <p class="font-body uppercase tracking-[0.3em] text-sm text-brand-red">Shop Parts &amp; Gear</p>
+          <h2 class="section-heading mt-4">Featured diesel upgrades</h2>
+          <p class="section-subheading max-w-xl">
+            A quick look at parts, filters, and monitors we stand behind. Every order ships direct — no markups for guessing.
+          </p>
+        </div>
+        <a href="/shop" class="btn-outline self-start sm:self-end">View Full Catalog</a>
       </div>
-      <div class="merch-grid">
-        {merch.map((item) => (
-          <div class="merch-card">
-            <div class="merch-placeholder">[Photo]</div>
-            <div class="merch-info">
-              <h4>{item.name}</h4>
-              <p class="merch-price">${(item.price / 100).toFixed(2)}</p>
-              <a href="/merch" class="btn btn-ghost">Reserve for Pickup</a>
+
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 xl:grid-cols-3 auto-rows-fr">
+        {featuredProducts.map((product) => (
+          <article class="card group flex h-full flex-col overflow-hidden rounded-2xl">
+            <a href={`/shop/${product.slug}/`} class="block overflow-hidden">
+              <img
+                src={product.image}
+                alt={product.name}
+                loading="lazy"
+                class="h-56 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+              />
+            </a>
+            <div class="flex flex-1 flex-col p-6">
+              <span class="inline-flex self-start rounded-full border border-brand-red/40 bg-brand-red/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-red">
+                {product.category}
+              </span>
+              <h3 class="mt-5 text-3xl leading-none text-brand-light">
+                <a href={`/shop/${product.slug}/`} class="transition-colors hover:text-brand-red">{product.name}</a>
+              </h3>
+              <p class="mt-4 flex-1 text-sm leading-6 text-brand-gray">{product.description}</p>
+              <div class="mt-6 flex items-end justify-between gap-4">
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gray">Price</p>
+                  <p class="mt-1 text-2xl font-semibold text-white">{formatPrice(product.price)}</p>
+                </div>
+                <a href={`/shop/${product.slug}/`} class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-red transition-colors hover:text-white">
+                  View Details
+                </a>
+              </div>
+              <button
+                class="add-to-cart-btn mt-6 w-full rounded-xl border border-brand-red bg-brand-red px-4 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-white transition-all duration-200 hover:bg-brand-redHot hover:shadow-red-glow"
+                data-id={product.id}
+                data-name={product.name}
+                data-price={String(Math.round(product.price * 100))}
+              >
+                Add to Cart
+              </button>
             </div>
-          </div>
+          </article>
         ))}
-      </div>
-      <div class="section-footer">
-        <a href="/merch" class="btn btn-secondary">Shop All Merch</a>
       </div>
     </div>
   </section>
-</Base>
 
-<style>
-  /* Hero */
-  .hero {
-    position: relative;
-    overflow: hidden;
-    padding: 6rem 0 4rem;
-  }
+  <section class="py-20 bg-brand-black border-y border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-start">
+        <div>
+          <p class="font-body uppercase tracking-[0.3em] text-sm text-brand-red">Why customers choose Menco</p>
+          <h2 class="section-heading mt-4">Shop mentality over sales mentality</h2>
+          <p class="section-subheading max-w-2xl">
+            The goal is not to push parts. The goal is to understand the truck, identify the problem, and recommend the right next step for how you actually use it.
+          </p>
+        </div>
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 10px,
-      rgba(255, 255, 255, 0.015) 10px,
-      rgba(255, 255, 255, 0.015) 20px
-    );
-    pointer-events: none;
-    z-index: 0;
-  }
+        <div class="card p-6 md:p-8">
+          <ul class="space-y-4 text-brand-gray">
+            <li class="flex gap-3">
+              <span class="mt-2 h-2 w-2 rounded-full bg-brand-red shrink-0"></span>
+              <span>Clear communication about issues, options, and priorities before work moves forward.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-2 h-2 w-2 rounded-full bg-brand-red shrink-0"></span>
+              <span>Performance recommendations built around reliability, towing, work use, and long-term drivability.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-2 h-2 w-2 rounded-full bg-brand-red shrink-0"></span>
+              <span>Diesel-focused experience with the platforms truck owners in south Louisiana depend on every day.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  .hero-inner {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
+  <section class="py-20 bg-brand-dark/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div>
+          <p class="font-body uppercase tracking-[0.3em] text-sm text-brand-red">Testimonials</p>
+          <h2 class="section-heading mt-4">Trusted by owners who depend on their trucks</h2>
+        </div>
+        <p class="max-w-2xl text-brand-gray leading-relaxed">
+          Menco Motorsports is built around honest diesel service, practical performance guidance, and repair work that respects your time and your investment.
+        </p>
+      </div>
 
-  .hero-badge {
-    display: inline-block;
-    padding: 0.35rem 0.9rem;
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent-accessible);
-    border: 1px solid var(--accent);
-    margin-bottom: 1.25rem;
-  }
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        {testimonials.map((testimonial) => (
+          <blockquote class="card p-6 flex flex-col h-full">
+            <p class="text-brand-light text-lg leading-relaxed">“{testimonial.quote}”</p>
+            <footer class="mt-6 text-sm uppercase tracking-[0.2em] text-brand-red">{testimonial.name}</footer>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
 
-  .hero h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    line-height: 1.1;
-    color: var(--text-primary);
-    margin: 0 0 1.25rem;
-    text-transform: uppercase;
-  }
+  <section class="py-20 bg-brand-black">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <p class="font-body uppercase tracking-[0.3em] text-sm text-brand-red">FAQ</p>
+        <h2 class="section-heading mt-4">Questions truck owners ask most</h2>
+        <p class="section-subheading max-w-2xl mx-auto">
+          If you are not sure where to start, these answers cover the most common service and shop questions we hear.
+        </p>
+      </div>
 
-  .hero h1 .accent {
-    color: var(--accent);
-  }
+      <div class="mt-12 space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="card group p-0 overflow-hidden" open={index === 0}>
+            <summary class="list-none cursor-pointer px-6 py-5 flex items-center justify-between gap-4 text-left">
+              <span class="font-body text-base md:text-lg font-semibold text-brand-light">{faq.question}</span>
+              <span class="text-brand-red text-2xl leading-none transition-transform group-open:rotate-45">+</span>
+            </summary>
+            <div class="px-6 pb-5 text-brand-gray leading-relaxed border-t border-white/10">
+              <p class="pt-4">{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 
-  .hero-sub {
-    color: var(--text-body);
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    max-width: 500px;
-  }
+  <section class="relative overflow-hidden border-t border-white/10 bg-brand-red">
+    <div class="absolute inset-0 opacity-30 bg-[repeating-linear-gradient(135deg,rgba(0,0,0,0.25)_0,rgba(0,0,0,0.25)_2px,transparent_2px,transparent_14px)]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,0,0,0.35),transparent_50%)]"></div>
 
-  .hero-ctas {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 items-center">
+        <div>
+          <p class="font-body uppercase tracking-[0.35em] text-xs text-white/80">Ready when you are</p>
+          <h2 class="mt-4 font-heading text-5xl md:text-6xl lg:text-7xl leading-[0.95] uppercase text-white">
+            Ready to get your truck<br />running right?
+          </h2>
+          <p class="mt-6 max-w-xl text-white/85 text-lg leading-relaxed">
+            Call the shop, send a message, or swing by. Menco Motorsports is built to keep diesel trucks working — not sitting.
+          </p>
+        </div>
 
-  .hero-image {
-    overflow: hidden;
-    max-height: 500px;
-    border-left: 2px solid var(--accent);
-  }
-  .hero-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-  }
+        <div class="flex flex-col gap-5 lg:items-end">
+          <div class="rounded-2xl border border-white/25 bg-black/30 backdrop-blur-sm px-6 py-5 w-full lg:max-w-sm">
+            <p class="font-body text-[11px] uppercase tracking-[0.35em] text-white/70">Call the shop</p>
+            <a
+              href="tel:3372886226"
+              class="mt-2 block font-heading text-5xl md:text-6xl leading-none text-white transition-transform duration-200 hover:scale-[1.02]"
+            >
+              (337) 288-6226
+            </a>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3 w-full lg:max-w-sm">
+            <a
+              href="/contact"
+              class="flex-1 text-center bg-white text-brand-red font-body font-semibold px-6 py-3 uppercase tracking-wider text-sm transition-all duration-200 hover:bg-brand-black hover:text-white border-2 border-white"
+            >
+              Get a Free Quote
+            </a>
+            <a
+              href="/shop"
+              class="flex-1 text-center border-2 border-white/80 text-white font-body font-semibold px-6 py-3 uppercase tracking-wider text-sm transition-all duration-200 hover:bg-white hover:text-brand-red"
+            >
+              Shop Parts
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
 
-  .services-section {
-    border-top: 1px solid var(--border);
-    padding-top: 5rem;
-  }
+<script>
+  import { addToCart } from '../lib/cart';
 
-  /* Services Grid */
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
+  document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const el = btn as HTMLElement;
+      const id = el.dataset.id!;
+      const name = el.dataset.name!;
+      const price = parseInt(el.dataset.price!, 10);
 
-  .service-card {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    padding: 2rem;
-    transition: border-color 0.2s;
-  }
+      addToCart({ id, name, price });
 
-  .service-card:hover {
-    border-color: var(--accent);
-  }
-
-  .service-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    color: var(--text-primary);
-    margin: 0 0 0.75rem;
-    text-transform: uppercase;
-  }
-
-  .service-card p {
-    color: var(--text-body);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  /* Section Footer */
-  .section-footer {
-    text-align: center;
-    margin-top: 2rem;
-    padding-bottom: 1rem;
-  }
-
-  /* CTA Strip */
-  .cta-strip {
-    background: var(--accent);
-    padding: 4rem 0;
-  }
-
-  .cta-strip-inner {
-    text-align: center;
-  }
-
-  .cta-strip h2 {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
-    color: #fff;
-    margin: 0 0 0.75rem;
-    text-transform: uppercase;
-  }
-
-  .cta-strip p {
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 1.05rem;
-    margin: 0 0 2rem;
-  }
-
-  .cta-strip-btn {
-    background: #fff;
-    color: var(--accent);
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 0.85rem 2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    display: inline-block;
-    transition: opacity 0.2s;
-  }
-
-  .cta-strip-btn:hover {
-    opacity: 0.9;
-  }
-
-  /* Merch Grid */
-  .merch-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .merch-card {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    transition: border-color 0.2s;
-  }
-
-  .merch-card:hover {
-    border-color: var(--accent);
-  }
-
-  .merch-placeholder {
-    width: 100%;
-    aspect-ratio: 1;
-    background: var(--bg-surface);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .merch-info {
-    padding: 1.25rem;
-  }
-
-  .merch-info h4 {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    color: var(--text-primary);
-    margin: 0 0 0.5rem;
-    text-transform: uppercase;
-  }
-
-  .merch-price {
-    color: var(--accent-accessible);
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin: 0 0 1rem;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .hero {
-      padding: 3rem 0;
-    }
-
-    .hero-inner {
-      grid-template-columns: 1fr;
-    }
-
-    .hero-image {
-      order: -1;
-    }
-
-    .services-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .merch-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
+      const original = el.textContent;
+      el.textContent = 'Added!';
+      setTimeout(() => { el.textContent = original; }, 1500);
+    });
+  });
+</script>

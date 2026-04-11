@@ -1,0 +1,134 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { categories, products } from '../../data/products';
+
+const shopDescription =
+  'Browse diesel performance upgrades, filters, fuel system parts, and monitoring gear from Menco Motorsports.';
+
+const allCategories = ['All', ...categories];
+const formatPrice = (price: number) =>
+  new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(price);
+---
+
+<Layout title="Shop" description={shopDescription} canonical="https://menco.pages.dev/shop">
+  <section class="bg-gradient-to-b from-brand-black via-brand-dark to-brand-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+      <div class="max-w-3xl">
+        <p class="text-sm font-semibold uppercase tracking-[0.35em] text-brand-red">Menco Store</p>
+        <h1 class="section-heading mt-4">Diesel Parts Built for Work and Power</h1>
+        <span class="red-accent-line"></span>
+        <p class="section-subheading max-w-2xl">
+          Shop proven upgrades, replacement parts, and shop-favorite components for Powerstroke,
+          Duramax, and Cummins builds.
+        </p>
+      </div>
+
+      <div class="mt-10 flex flex-wrap gap-3" aria-label="Product categories">
+        {allCategories.map((category, index) => {
+          const categoryId = category === 'All' ? 'all' : category.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+          return (
+            <a
+              href={`#category-${categoryId}`}
+              class:list={[
+                'rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] transition-colors duration-200',
+                index === 0
+                  ? 'border-brand-red bg-brand-red text-white'
+                  : 'border-white/15 bg-brand-dark text-brand-gray hover:border-brand-red/60 hover:text-brand-light',
+              ]}
+            >
+              {category}
+            </a>
+          );
+        })}
+      </div>
+
+      <div id="category-all" class="mt-12 grid gap-8 sm:grid-cols-2 xl:grid-cols-3 auto-rows-fr">
+        {products.map((product) => (
+          <article class="card group flex h-full flex-col overflow-hidden rounded-2xl" id={`category-${product.category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+            <a href={`/shop/${product.slug}/`} class="block overflow-hidden">
+              <img
+                src={product.image}
+                alt={product.name}
+                class="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                loading="lazy"
+              />
+            </a>
+
+            <div class="flex flex-1 flex-col p-6">
+              <div class="flex items-start justify-between gap-4">
+                <span class="inline-flex rounded-full border border-brand-red/40 bg-brand-red/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-red">
+                  {product.category}
+                </span>
+                <span class:list={[
+                  'rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em]',
+                  product.inStock
+                    ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20'
+                    : 'bg-white/5 text-brand-gray border border-white/10',
+                ]}>
+                  {product.inStock ? 'In Stock' : 'Backorder'}
+                </span>
+              </div>
+
+              <h2 class="mt-5 text-3xl leading-none text-brand-light">
+                <a href={`/shop/${product.slug}`} class="transition-colors hover:text-brand-red">
+                  {product.name}
+                </a>
+              </h2>
+
+              <p class="mt-4 flex-1 text-sm leading-6 text-brand-gray">{product.description}</p>
+
+              <div class="mt-6 flex items-end justify-between gap-4">
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gray">Price</p>
+                  <p class="mt-1 text-2xl font-semibold text-white">{formatPrice(product.price)}</p>
+                </div>
+                <a href={`/shop/${product.slug}`} class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-red transition-colors hover:text-white">
+                  View Details
+                </a>
+              </div>
+
+              <button
+                class:list={[
+                  'add-to-cart-btn mt-6 w-full rounded-xl border px-4 py-3 text-sm font-semibold uppercase tracking-[0.25em] transition-all duration-200',
+                  product.inStock
+                    ? 'border-brand-red bg-brand-red text-white hover:bg-brand-redHot hover:shadow-red-glow'
+                    : 'cursor-not-allowed border-white/10 bg-white/5 text-brand-gray',
+                ]}
+                data-id={product.id}
+                data-name={product.name}
+                data-price={String(Math.round(product.price * 100))}
+                disabled={!product.inStock}
+              >
+                {product.inStock ? 'Add to Cart' : 'Unavailable'}
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { addToCart } from '../../lib/cart';
+
+  document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const el = btn as HTMLElement;
+      if (el.hasAttribute('disabled')) return;
+      const id = el.dataset.id!;
+      const name = el.dataset.name!;
+      const price = parseInt(el.dataset.price!, 10);
+
+      addToCart({ id, name, price });
+
+      const original = el.textContent;
+      el.textContent = 'Added!';
+      setTimeout(() => { el.textContent = original; }, 1500);
+    });
+  });
+</script>

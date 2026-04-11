@@ -1,0 +1,161 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getProductBySlug, products } from '../../data/products';
+
+export function getStaticPaths() {
+  return products.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+
+if (!product) {
+  return Astro.redirect('/shop');
+}
+
+const relatedProducts = products
+  .filter((item) => item.slug !== product.slug && item.category === product.category)
+  .slice(0, 3);
+
+const formatPrice = (price: number) =>
+  new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(price);
+
+const pageTitle = `${product.name}`;
+const pageDescription = product.description;
+const canonical = `https://menco.pages.dev/shop/${product.slug}`;
+const resolvedProduct = getProductBySlug(product.slug) ?? product;
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={canonical}
+  image={resolvedProduct.image}
+>
+  <section class="bg-gradient-to-b from-brand-black via-brand-dark to-brand-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+      <a
+        href="/shop"
+        class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-brand-gray transition-colors hover:text-brand-red"
+      >
+        <span aria-hidden="true">←</span>
+        Back to Shop
+      </a>
+
+      <div class="mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+        <div class="overflow-hidden rounded-3xl border border-white/10 bg-brand-dark shadow-red-glow-sm">
+          <img src={resolvedProduct.image} alt={resolvedProduct.name} class="h-full w-full object-cover" />
+        </div>
+
+        <div>
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="inline-flex rounded-full border border-brand-red/40 bg-brand-red/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-red">
+              {resolvedProduct.category}
+            </span>
+            <span class:list={[
+              'rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em]',
+              resolvedProduct.inStock
+                ? 'border-emerald-500/20 bg-emerald-500/10 text-emerald-300'
+                : 'border-white/10 bg-white/5 text-brand-gray',
+            ]}>
+              {resolvedProduct.inStock ? 'In Stock' : 'Backorder'}
+            </span>
+          </div>
+
+          <h1 class="mt-5 text-5xl leading-none text-brand-light md:text-6xl">{resolvedProduct.name}</h1>
+          <span class="red-accent-line"></span>
+
+          <p class="text-base leading-7 text-brand-gray">{resolvedProduct.description}</p>
+
+          <div class="mt-8 rounded-2xl border border-white/10 bg-brand-black/50 p-6">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gray">Price</p>
+                <p class="mt-2 text-4xl font-semibold text-white">{formatPrice(resolvedProduct.price)}</p>
+              </div>
+              <p class="max-w-sm text-sm leading-6 text-brand-gray">
+                Need help confirming fitment before checkout? Contact the Menco Motorsports team for
+                diesel-specific recommendations.
+              </p>
+            </div>
+
+            <button
+              class:list={[
+                'snipcart-add-item mt-6 w-full rounded-xl border px-5 py-4 text-sm font-semibold uppercase tracking-[0.25em] transition-all duration-200 sm:w-auto',
+                resolvedProduct.inStock
+                  ? 'border-brand-red bg-brand-red text-white hover:bg-brand-redHot hover:shadow-red-glow'
+                  : 'cursor-not-allowed border-white/10 bg-white/5 text-brand-gray',
+              ]}
+              data-item-id={resolvedProduct.id}
+              data-item-name={resolvedProduct.name}
+              data-item-price={resolvedProduct.price}
+              data-item-url={`/shop/${resolvedProduct.slug}/`}
+              data-item-image={resolvedProduct.image}
+              data-item-description={resolvedProduct.description}
+              data-item-categories={resolvedProduct.category}
+              disabled={!resolvedProduct.inStock}
+            >
+              {resolvedProduct.inStock ? 'Add to Cart' : 'Currently Unavailable'}
+            </button>
+          </div>
+
+          <div class="mt-8 rounded-2xl border border-white/10 bg-brand-dark p-6">
+            <h2 class="text-3xl text-brand-light">Product Details</h2>
+            <ul class="mt-5 space-y-3 text-sm leading-6 text-brand-gray">
+              {resolvedProduct.details.map((detail) => (
+                <li class="flex gap-3">
+                  <span class="mt-2 inline-block h-2 w-2 shrink-0 rounded-full bg-brand-red"></span>
+                  <span>{detail}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {relatedProducts.length > 0 && (
+        <div class="mt-16 border-t border-white/10 pt-12">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.3em] text-brand-red">Related Products</p>
+              <h2 class="mt-3 text-4xl text-brand-light">More in {resolvedProduct.category}</h2>
+            </div>
+            <a href="/shop" class="text-sm font-semibold uppercase tracking-[0.25em] text-brand-gray transition-colors hover:text-brand-red">
+              View Full Catalog
+            </a>
+          </div>
+
+          <div class="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {relatedProducts.map((item) => (
+              <article class="card overflow-hidden rounded-2xl">
+                <a href={`/shop/${item.slug}`} class="block overflow-hidden">
+                  <img src={item.image} alt={item.name} class="h-52 w-full object-cover transition-transform duration-300 hover:scale-[1.03]" loading="lazy" />
+                </a>
+                <div class="p-5">
+                  <span class="inline-flex rounded-full border border-brand-red/40 bg-brand-red/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-red">
+                    {item.category}
+                  </span>
+                  <h3 class="mt-4 text-2xl text-brand-light">
+                    <a href={`/shop/${item.slug}`} class="transition-colors hover:text-brand-red">{item.name}</a>
+                  </h3>
+                  <p class="mt-3 text-sm leading-6 text-brand-gray">{item.description}</p>
+                  <div class="mt-5 flex items-center justify-between gap-4">
+                    <p class="text-xl font-semibold text-white">{formatPrice(item.price)}</p>
+                    <a href={`/shop/${item.slug}`} class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-red transition-colors hover:text-white">
+                      View Product
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,27 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/services', label: 'Services' },
+  { href: '/about', label: 'About' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/shop', label: 'Shop' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const { pathname } = Astro.url;
+---
+<nav class="hidden md:flex items-center gap-6" aria-label="Main navigation">
+  {links.map(({ href, label }) => (
+    <a
+      href={href}
+      class:list={[
+        'font-body text-sm font-medium uppercase tracking-wider transition-colors duration-200',
+        pathname === href || (href !== '/' && pathname.startsWith(href))
+          ? 'text-brand-red'
+          : 'text-brand-gray hover:text-brand-light',
+      ]}
+    >
+      {label}
+    </a>
+  ))}
+</nav>

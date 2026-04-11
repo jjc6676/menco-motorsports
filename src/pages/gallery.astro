@@ -1,133 +1,235 @@
 ---
-import Base from '../layouts/Base.astro';
+import Layout from '../layouts/Layout.astro';
 
+// Placeholder photos via picsum.photos (deterministic via seed).
+// Swap each `image` URL with a real shop photo when media is ready.
 const galleryItems = [
-  { alt: 'Ford F-250 fuel system upgrade' },
-  { alt: 'Powerstroke 6.7L injector replacement' },
-  { alt: 'Duramax turbo rebuild' },
-  { alt: 'Cummins 5.9 injection pump swap' },
-  { alt: 'Ram 2500 lift kit and alignment' },
-  { alt: 'F-350 EGR delete and tuning' },
-  { alt: 'Silverado 2500HD glow plug replacement' },
-  { alt: 'Powerstroke HPOP rebuild' },
-  { alt: 'Duramax LML CP4 failure repair' },
-  { alt: 'Ford F-450 front end rebuild' },
-  { alt: 'Cummins 6.7 head gasket replacement' },
-  { alt: 'Powerstroke 6.0 bulletproofing' },
+  {
+    title: 'Built for Power',
+    category: 'Powerstroke Performance',
+    description: 'Custom calibration, turbo upgrades, and supporting hardware for dependable horsepower.',
+    height: 'h-72',
+    image: 'https://picsum.photos/seed/menco-1/900/700',
+  },
+  {
+    title: 'Shop Floor Detail',
+    category: 'Precision Diagnostics',
+    description: 'Hands-on troubleshooting and repair work for hard-use diesel trucks.',
+    height: 'h-96',
+    image: 'https://picsum.photos/seed/menco-2/900/900',
+  },
+  {
+    title: 'Engine Bay Refresh',
+    category: 'Mechanical Upgrades',
+    description: 'Fresh components, clean routing, and a finish that matches the work underneath.',
+    height: 'h-80',
+    image: 'https://picsum.photos/seed/menco-3/900/800',
+  },
+  {
+    title: 'Track-Ready Stance',
+    category: 'Suspension & Setup',
+    description: 'Dialed-in stance and durability for aggressive street and event use.',
+    height: 'h-[26rem]',
+    image: 'https://picsum.photos/seed/menco-4/900/1100',
+  },
+  {
+    title: 'Fabrication Corner',
+    category: 'Custom Metalwork',
+    description: 'Purpose-built fabrication with a clean, industrial finish and race-inspired edge.',
+    height: 'h-64',
+    image: 'https://picsum.photos/seed/menco-5/900/650',
+  },
+  {
+    title: 'Late Night Wrenching',
+    category: 'Shop Culture',
+    description: 'The kind of after-hours work that keeps builds moving and trucks on schedule.',
+    height: 'h-[22rem]',
+    image: 'https://picsum.photos/seed/menco-6/900/950',
+  },
+  {
+    title: 'Front-End Presence',
+    category: 'Showcase Build',
+    description: 'A finished look with the aggressive black-and-red style Menco is known for.',
+    height: 'h-72',
+    image: 'https://picsum.photos/seed/menco-7/900/700',
+  },
+  {
+    title: 'Engine Out Service',
+    category: 'Major Repairs',
+    description: 'Big repairs handled with shop discipline, clear process, and zero shortcuts.',
+    height: 'h-[22rem]',
+    image: 'https://picsum.photos/seed/menco-8/900/950',
+  },
+  {
+    title: 'Diesel Detail Shot',
+    category: 'Parts & Finish',
+    description: 'Close-up craftsmanship on parts that have to look right and perform harder.',
+    height: 'h-60',
+    image: 'https://picsum.photos/seed/menco-9/900/600',
+  },
 ];
 ---
 
-<Base title="Gallery" description="See real diesel repair and performance work from Menco Motorsports in Lafayette, LA.">
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-line"></div>
-        <h1>Our Work</h1>
-        <p>Real work on real trucks. Every job done right.</p>
-      </div>
+<Layout
+  title="Gallery"
+  description="Browse the Menco Motorsports gallery featuring diesel builds, fabrication details, shop work, and performance truck projects."
+>
+  <section class="border-b border-white/10 bg-gradient-to-b from-brand-dark to-brand-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+      <p class="font-body text-sm uppercase tracking-[0.35em] text-brand-red">Menco Gallery</p>
+      <h1 class="section-heading mt-4">Built in the Shop. Proven on the Road.</h1>
+      <span class="red-accent-line"></span>
+      <p class="max-w-3xl font-body text-brand-gray text-lg leading-relaxed">
+        A quick look at the work, attitude, and mechanical detail behind Menco Motorsports. These dark placeholders
+        are ready to be swapped with real shop photography whenever the final media set is available.
+      </p>
+    </div>
+  </section>
 
-      <div class="gallery-grid">
-        {galleryItems.map((item) => (
-          <div class="gallery-item">
-            <div class="gallery-placeholder">
-              <span>{item.alt}</span>
-            </div>
-          </div>
+  <section class="py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="columns-1 gap-6 sm:columns-2 xl:columns-3 [column-fill:_balance]">
+        {galleryItems.map((item, index) => (
+          <figure class="group card relative mb-6 break-inside-avoid overflow-hidden rounded-sm">
+            <button
+              type="button"
+              class={`gallery-card ${item.height} relative flex w-full items-end overflow-hidden bg-brand-dark text-left`}
+              data-gallery-trigger
+              data-title={item.title}
+              data-category={item.category}
+              data-description={item.description}
+              data-image={item.image}
+              aria-label={`Open ${item.title} in lightbox`}
+            >
+              <img
+                src={item.image}
+                alt={`${item.title} — ${item.category}`}
+                loading="lazy"
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+              />
+              <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.25)_0%,rgba(10,10,10,0.55)_55%,rgba(10,10,10,0.92)_100%)]"></div>
+              <div class="absolute inset-0 opacity-60 mix-blend-multiply bg-[radial-gradient(circle_at_top_right,rgba(204,0,0,0.18),transparent_50%)]"></div>
+              <div class="absolute left-4 top-4 flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.32em] text-brand-light/70">
+                <span class="inline-block h-px w-8 bg-brand-red"></span>
+                #{String(index + 1).padStart(2, '0')}
+              </div>
+              <div class="relative z-10 w-full border-t border-white/10 bg-black/50 p-5 backdrop-blur-sm transition duration-200 group-hover:bg-black/65">
+                <p class="font-body text-xs uppercase tracking-[0.28em] text-brand-red">{item.category}</p>
+                <figcaption class="mt-2 font-heading text-2xl uppercase tracking-wide text-brand-light">
+                  {item.title}
+                </figcaption>
+                <p class="mt-2 font-body text-sm leading-relaxed text-brand-gray">{item.description}</p>
+              </div>
+            </button>
+          </figure>
         ))}
       </div>
+    </div>
+  </section>
 
-      <div class="gallery-follow">
-        <p>Follow us on Facebook for our latest work</p>
-        <a href="https://www.facebook.com/profile.php?id=61558910277885" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Follow on Facebook</a>
+  <div
+    id="gallery-lightbox"
+    class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/90 px-4 py-8"
+    aria-hidden="true"
+  >
+    <div class="absolute inset-0" data-lightbox-close></div>
+    <div class="relative z-10 w-full max-w-4xl border border-white/10 bg-brand-dark shadow-2xl shadow-black/60">
+      <button
+        type="button"
+        class="absolute right-3 top-3 z-20 inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-black/70 text-brand-light transition hover:border-brand-red hover:text-brand-red"
+        data-lightbox-close
+        aria-label="Close gallery lightbox"
+      >
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <div class="grid gap-0 lg:grid-cols-[1.25fr_0.75fr]">
+        <div class="relative min-h-[24rem] overflow-hidden bg-black">
+          <img id="lightbox-image" src="" alt="" class="absolute inset-0 h-full w-full object-cover" />
+          <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.15)_0%,rgba(10,10,10,0.55)_60%,rgba(10,10,10,0.92)_100%)]"></div>
+          <div class="absolute inset-0 bg-gradient-to-br from-brand-red/15 via-transparent to-black/40"></div>
+          <div class="absolute left-6 top-6 border border-white/10 bg-black/60 px-3 py-2 font-body text-[0.68rem] uppercase tracking-[0.3em] text-brand-light/70">
+            Gallery Preview
+          </div>
+          <div class="absolute bottom-6 left-6 right-6 border-t border-white/10 pt-4">
+            <p id="lightbox-category" class="font-body text-xs uppercase tracking-[0.3em] text-brand-red"></p>
+            <p id="lightbox-title" class="mt-2 font-heading text-4xl uppercase tracking-wide text-brand-light"></p>
+          </div>
+        </div>
+
+        <div class="flex flex-col justify-between border-t border-white/10 p-6 lg:border-l lg:border-t-0">
+          <div>
+            <p class="font-heading text-2xl uppercase tracking-wide text-brand-light">Project Notes</p>
+            <span class="red-accent-line"></span>
+            <p id="lightbox-description" class="font-body text-base leading-relaxed text-brand-gray"></p>
+          </div>
+
+          <div class="mt-8 space-y-4 border-t border-white/10 pt-6 font-body text-sm text-brand-gray">
+            <p>
+              Need a real photo set here? Replace each placeholder card with final media assets and keep the same captions,
+              categories, and lightbox structure.
+            </p>
+            <a href="/contact" class="btn-red w-full text-center sm:w-auto">Book Your Build</a>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="section-alt">
-    <div class="container cta-strip">
-      <h2>Ready to get your truck in the shop?</h2>
-      <p>Contact us today for a quote or to schedule your service.</p>
-      <a href="/contact" class="btn btn-primary">Get in Touch</a>
-    </div>
-  </section>
-</Base>
+  <script>
+    const lightbox = document.getElementById('gallery-lightbox');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxCategory = document.getElementById('lightbox-category');
+    const lightboxDescription = document.getElementById('lightbox-description');
+    const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement | null;
+    const triggers = document.querySelectorAll('[data-gallery-trigger]');
+    const closers = document.querySelectorAll('[data-lightbox-close]');
+    let previousActiveElement: HTMLElement | null = null;
 
-<style>
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 48px;
-  }
+    const openLightbox = (trigger: HTMLElement | null) => {
+      if (!(trigger instanceof HTMLElement) || !lightbox) return;
 
-  .gallery-item {
-    break-inside: avoid;
-  }
+      previousActiveElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      if (lightboxTitle) lightboxTitle.textContent = trigger.dataset.title ?? '';
+      if (lightboxCategory) lightboxCategory.textContent = trigger.dataset.category ?? '';
+      if (lightboxDescription) lightboxDescription.textContent = trigger.dataset.description ?? '';
+      if (lightboxImage) {
+        lightboxImage.src = trigger.dataset.image ?? '';
+        lightboxImage.alt = trigger.dataset.title ?? '';
+      }
 
-  .gallery-placeholder {
-    aspect-ratio: 4 / 3;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    text-align: center;
-    transition: border-color 0.2s ease;
-  }
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
 
-  .gallery-placeholder span {
-    color: var(--text-muted);
-    font-family: var(--font-body);
-    font-size: 14px;
-  }
+      const closeButton = lightbox.querySelector('button[data-lightbox-close]');
+      if (closeButton instanceof HTMLElement) closeButton.focus();
+    };
 
-  .gallery-placeholder:hover {
-    border-color: var(--accent);
-  }
+    const closeLightbox = () => {
+      if (!lightbox) return;
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      previousActiveElement?.focus();
+    };
 
-  .gallery-follow {
-    text-align: center;
-    margin-top: 64px;
-    padding: 48px 0;
-    border-top: 1px solid var(--border);
-  }
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => openLightbox(trigger instanceof HTMLElement ? trigger : null));
+    });
 
-  .gallery-follow p {
-    color: var(--text-body);
-    font-family: var(--font-body);
-    font-size: 18px;
-    margin-bottom: 24px;
-  }
+    closers.forEach((closer) => {
+      closer.addEventListener('click', closeLightbox);
+    });
 
-  .cta-strip {
-    text-align: center;
-    padding: 64px 0;
-  }
-
-  .cta-strip h2 {
-    font-family: var(--font-display);
-    color: var(--text-primary);
-    font-size: 32px;
-    margin-bottom: 12px;
-  }
-
-  .cta-strip p {
-    color: var(--text-body);
-    font-family: var(--font-body);
-    font-size: 16px;
-    margin-bottom: 32px;
-  }
-
-  @media (max-width: 1024px) {
-    .gallery-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 640px) {
-    .gallery-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && lightbox && !lightbox.classList.contains('hidden')) {
+        closeLightbox();
+      }
+    });
+  </script>
+</Layout>

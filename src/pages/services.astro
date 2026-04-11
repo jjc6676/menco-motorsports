@@ -1,185 +1,149 @@
 ---
-import Base from '../layouts/Base.astro';
-import { getCollection, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
 
-const allServices = await getCollection('services');
-const services = allServices.sort((a, b) => a.data.order - b.data.order);
+const services = [
+  {
+    title: 'Diesel Diagnostics',
+    description:
+      'Accurate troubleshooting for warning lights, rough running, hard starts, power loss, fuel-system concerns, and repeat issues that have not been solved correctly the first time.',
+    points: ['Scan-tool based fault tracing', 'Electrical and drivability diagnosis', 'Repair plans built around root cause'],
+  },
+  {
+    title: 'Repair & Reliability Work',
+    description:
+      'Dependable repair work for diesel pickups and work trucks that cannot afford unnecessary downtime. We focus on quality, clarity, and repairs that make sense for the truck.',
+    points: ['Engine-related diesel repairs', 'Supporting system service and replacement', 'Recommendations prioritized by urgency and use case'],
+  },
+  {
+    title: 'Performance Upgrades',
+    description:
+      'Thoughtful performance improvements for owners who want stronger response, better towing confidence, or a more complete build without sacrificing a smart foundation.',
+    points: ['Airflow and turbo supporting upgrades', 'Fueling and monitoring recommendations', 'Upgrade paths matched to goals and budget'],
+  },
+  {
+    title: 'Powerstroke Service',
+    description:
+      'Ford diesel support for owners who need a shop that understands common platform issues, reliable repair strategy, and practical improvement planning.',
+    points: ['6.0, 6.4, 6.7 platform familiarity', 'Repair-first problem solving', 'Performance guidance with reliability in mind'],
+  },
+  {
+    title: 'Duramax Service',
+    description:
+      'GM diesel diagnostics, repair, and upgrade consultation for trucks used for hauling, daily driving, and hard work in real conditions.',
+    points: ['LB7 through L5P platform support', 'Driveability and fuel-system attention', 'Street, tow, and work-focused setups'],
+  },
+  {
+    title: 'Cummins Service',
+    description:
+      'Ram diesel expertise for owners looking to restore confidence, solve nagging problems, or build a truck with dependable supporting systems.',
+    points: ['Common rail platform familiarity', 'Work-truck and towing priorities', 'Balanced planning for repairs and upgrades'],
+  },
+];
 
-const rendered = await Promise.all(
-  services.map(async (service) => {
-    const { Content } = await render(service);
-    return { service, Content };
-  })
-);
+const processSteps = [
+  {
+    title: '1. Talk through the truck',
+    description: 'Start with the platform, symptoms, current setup, and how the truck is actually used day to day.',
+  },
+  {
+    title: '2. Diagnose before guessing',
+    description: 'Use a methodical diesel-focused process to identify the issue instead of throwing parts at the problem.',
+  },
+  {
+    title: '3. Prioritize the right work',
+    description: 'Separate immediate needs from future upgrades so owners can make informed decisions with confidence.',
+  },
+  {
+    title: '4. Build for the real goal',
+    description: 'Whether that means reliability, towing, response, or performance, the final recommendation should fit the truck’s job.',
+  },
+];
 ---
 
-<Base
-  title="Services | Menco Motorsports"
-  description="Diesel repair and performance services from Menco Motorsports in Lafayette, LA. From diagnostics to full builds, we keep your truck running strong."
+<Layout
+  title="Services"
+  description="Explore diesel diagnostics, repair, and performance services from Menco Motorsports for Powerstroke, Duramax, and Cummins trucks in Lafayette, LA."
 >
-  <!-- Hero -->
-  <section class="services-hero">
-    <div class="container">
-      <h1>Our Services</h1>
-      <p class="services-hero-sub">
-        Specialized diesel repair and performance for trucks that work as hard as you do.
-      </p>
+  <section class="relative overflow-hidden border-b border-white/10 bg-brand-black">
+    <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(204,0,0,0.16),transparent_40%),repeating-linear-gradient(0deg,rgba(255,255,255,0.04)_0,rgba(255,255,255,0.04)_1px,transparent_1px,transparent_52px)] opacity-70"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24">
+      <div class="max-w-3xl">
+        <p class="font-body text-sm uppercase tracking-[0.35em] text-brand-red">Services</p>
+        <h1 class="mt-4 font-heading text-6xl md:text-7xl leading-none uppercase text-brand-light">
+          Diesel service with a practical performance mindset
+        </h1>
+        <span class="red-accent-line"></span>
+        <p class="text-lg text-brand-gray leading-relaxed max-w-2xl">
+          Menco Motorsports provides diesel diagnostics, repair, and upgrade planning for truck owners who need real answers and reliable results. We focus on Powerstroke, Duramax, and Cummins platforms with work-first discipline and performance knowledge.
+        </p>
+      </div>
     </div>
   </section>
 
-  <!-- Services List -->
-  <section class="section">
-    <div class="container">
-      <div class="services-grid">
-        {rendered.map(({ service, Content }) => (
-          <div class="service-card">
-            <h3>{service.data.title}</h3>
-            <div class="service-body">
-              <Content />
-            </div>
-            <a href="/contact" class="btn btn-ghost">Contact Us About This</a>
-          </div>
+  <section class="py-20 bg-brand-dark/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <p class="font-body uppercase tracking-[0.3em] text-sm text-brand-red">What we do</p>
+        <h2 class="section-heading mt-4">Core shop services</h2>
+        <p class="section-subheading">
+          Every service starts with understanding what the truck needs now and what will actually serve the owner long term.
+        </p>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {services.map((service) => (
+          <article class="card p-6 h-full flex flex-col">
+            <h3 class="font-heading text-3xl text-brand-light uppercase">{service.title}</h3>
+            <span class="red-accent-line"></span>
+            <p class="text-brand-gray leading-relaxed flex-1">{service.description}</p>
+            <ul class="mt-6 space-y-2 text-sm text-brand-light/90">
+              {service.points.map((point) => (
+                <li class="flex gap-3">
+                  <span class="mt-1.5 h-2 w-2 rounded-full bg-brand-red shrink-0"></span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- CTA Strip -->
-  <section class="cta-strip">
-    <div class="container cta-strip-inner">
-      <h2>Ready to get your truck running right?</h2>
-      <p>Give us a call or stop by the shop. Walk-ins welcome, appointments preferred.</p>
-      <a href="tel:+13372886226" class="btn cta-strip-btn">Call (337) 288-6226</a>
+  <section class="py-20 bg-brand-black border-y border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10 items-start">
+        <div>
+          <p class="font-body uppercase tracking-[0.3em] text-sm text-brand-red">How Menco works</p>
+          <h2 class="section-heading mt-4">A better process for serious truck owners</h2>
+          <p class="section-subheading max-w-xl">
+            Diesel service should not feel like guesswork. We keep the process straightforward, informed, and centered on the actual job your truck has to do.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {processSteps.map((step) => (
+            <article class="card p-6 h-full">
+              <h3 class="font-heading text-2xl text-brand-light uppercase">{step.title}</h3>
+              <p class="mt-4 text-brand-gray leading-relaxed text-sm md:text-base">{step.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
-</Base>
 
-<style>
-  /* Services Hero */
-  .services-hero {
-    padding: 6rem 0 3rem;
-    text-align: center;
-  }
-
-  .services-hero h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3rem);
-    color: var(--text-primary);
-    margin: 0 0 1rem;
-    text-transform: uppercase;
-  }
-
-  .services-hero-sub {
-    color: var(--text-body);
-    font-size: 1.1rem;
-    line-height: 1.6;
-    max-width: 560px;
-    margin: 0 auto;
-  }
-
-  /* Services Grid */
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-
-  .service-card {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    padding: 2rem;
-    transition: border-color 0.2s;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .service-card:hover {
-    border-color: var(--accent);
-  }
-
-  .service-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    color: var(--text-primary);
-    margin: 0 0 1rem;
-    text-transform: uppercase;
-  }
-
-  .service-body {
-    color: var(--text-body);
-    font-size: 0.95rem;
-    line-height: 1.7;
-    flex: 1;
-    margin-bottom: 1.5rem;
-  }
-
-  .service-body :global(p) {
-    margin: 0 0 0.75rem;
-  }
-
-  .service-body :global(p:last-child) {
-    margin-bottom: 0;
-  }
-
-  .service-body :global(ul) {
-    padding-left: 1.25rem;
-    margin: 0.5rem 0;
-  }
-
-  .service-body :global(li) {
-    margin-bottom: 0.35rem;
-  }
-
-  /* CTA Strip */
-  .cta-strip {
-    background: var(--accent);
-    padding: 4rem 0;
-  }
-
-  .cta-strip-inner {
-    text-align: center;
-  }
-
-  .cta-strip h2 {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
-    color: #fff;
-    margin: 0 0 0.75rem;
-    text-transform: uppercase;
-  }
-
-  .cta-strip p {
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 1.05rem;
-    margin: 0 0 2rem;
-  }
-
-  .cta-strip-btn {
-    background: #fff;
-    color: var(--accent);
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 0.85rem 2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    display: inline-block;
-    transition: opacity 0.2s;
-  }
-
-  .cta-strip-btn:hover {
-    opacity: 0.9;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .services-hero {
-      padding: 3rem 0 2rem;
-    }
-
-    .services-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
+  <section class="py-20 bg-brand-dark/70">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="font-body uppercase tracking-[0.3em] text-sm text-brand-red">Need help with your truck?</p>
+      <h2 class="section-heading mt-4">Tell us what your diesel is doing</h2>
+      <p class="section-subheading max-w-3xl mx-auto">
+        If your truck has a persistent issue, needs a smarter repair path, or you are planning upgrades the right way, Menco Motorsports is ready to help you sort out the next move.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/contact" class="btn-red">Request a Quote</a>
+        <a href="/about" class="btn-outline">Learn About Menco</a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,124 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const values = [
+  {
+    title: 'Honesty',
+    description:
+      'We believe truck owners deserve direct answers, realistic expectations, and recommendations that respect their budget and priorities.',
+  },
+  {
+    title: 'Reliability',
+    description:
+      'A diesel truck is often a tool, not a toy. Our work is guided by dependable outcomes that support everyday use, towing, and business needs.',
+  },
+  {
+    title: 'Performance with purpose',
+    description:
+      'Upgrades should serve a clear goal. We focus on improvements that make sense for the truck rather than chasing numbers without a plan.',
+  },
+  {
+    title: 'Platform knowledge',
+    description:
+      'Powerstroke, Duramax, and Cummins trucks all have different strengths and failure points. Specialized knowledge helps lead to better decisions.',
+  },
+];
+
+const storyPoints = [
+  'Menco Motorsports is rooted in diesel truck culture and built around helping owners make smarter service and performance decisions.',
+  'The shop exists for people who rely on their trucks and want a diesel-focused team that understands both repair fundamentals and the bigger picture of a complete build.',
+  'That means looking beyond the immediate symptom, identifying the real issue, and recommending work that supports long-term drivability, reliability, and confidence.',
+];
+---
+
+<Layout
+  title="About"
+  description="Learn about Menco Motorsports, a Lafayette diesel shop focused on honest diagnostics, repair, and performance work for Powerstroke, Duramax, and Cummins trucks."
+>
+  <section class="relative overflow-hidden border-b border-white/10 bg-brand-black">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_left_top,rgba(204,0,0,0.18),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_70%)]"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24">
+      <div class="max-w-3xl">
+        <p class="font-body text-sm uppercase tracking-[0.35em] text-brand-red">About Menco Motorsports</p>
+        <h1 class="mt-4 font-heading text-6xl md:text-7xl leading-none uppercase text-brand-light">
+          A diesel shop built around trust, clarity, and capable work
+        </h1>
+        <span class="red-accent-line"></span>
+        <p class="text-lg text-brand-gray leading-relaxed max-w-2xl">
+          Menco Motorsports serves truck owners in Lafayette and the surrounding region with diesel-focused repair insight, performance knowledge, and a practical commitment to doing the job right.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-brand-dark/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-10 items-start">
+        <div>
+          <p class="font-body uppercase tracking-[0.3em] text-sm text-brand-red">Our story</p>
+          <h2 class="section-heading mt-4">Why Menco exists</h2>
+          <p class="section-subheading max-w-xl">
+            The mission is simple: offer diesel truck owners a shop experience grounded in honest assessment, smart service, and performance recommendations that actually fit the truck.
+          </p>
+        </div>
+
+        <div class="card p-6 md:p-8 space-y-5 text-brand-gray leading-relaxed">
+          {storyPoints.map((point) => (
+            <p>{point}</p>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-brand-black border-y border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <p class="font-body uppercase tracking-[0.3em] text-sm text-brand-red">What matters here</p>
+        <h2 class="section-heading mt-4">Core values</h2>
+        <p class="section-subheading">
+          These principles shape how Menco Motorsports approaches diagnostics, repairs, recommendations, and customer relationships.
+        </p>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {values.map((value) => (
+          <article class="card p-6 h-full">
+            <h3 class="font-heading text-3xl text-brand-light uppercase">{value.title}</h3>
+            <span class="red-accent-line"></span>
+            <p class="text-brand-gray leading-relaxed">{value.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-brand-dark/70">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card p-6">
+          <p class="font-heading text-4xl text-brand-light uppercase">Diesel Focused</p>
+          <p class="mt-3 text-brand-gray leading-relaxed">
+            Specialized attention on Powerstroke, Duramax, and Cummins platforms instead of a generalist approach.
+          </p>
+        </div>
+        <div class="card p-6">
+          <p class="font-heading text-4xl text-brand-light uppercase">Work Truck Mindset</p>
+          <p class="mt-3 text-brand-gray leading-relaxed">
+            Service and upgrade guidance built for trucks that tow, haul, commute, and support real livelihoods.
+          </p>
+        </div>
+        <div class="card p-6">
+          <p class="font-heading text-4xl text-brand-light uppercase">Real Conversations</p>
+          <p class="mt-3 text-brand-gray leading-relaxed">
+            Owners get straightforward communication about problems, priorities, and the smartest next step for the truck.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-10 text-center">
+        <a href="/services" class="btn-red">View Services</a>
+      </div>
+    </div>
+  </section>
+</Layout>

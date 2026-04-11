@@ -1,0 +1,83 @@
+---
+import '@fontsource/bebas-neue';
+import '@fontsource/inter/300.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+}
+
+const {
+  title,
+  description = 'Menco Motorsports — Lafayette, LA diesel performance and repair. Powerstroke, Duramax, Cummins specialists.',
+  image = '/og-default.jpg',
+  canonical,
+} = Astro.props;
+
+const siteUrl = 'https://mencomotorsports.com';
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteUrl).toString();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0a" />
+
+    <title>{title} | Menco Motorsports</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={`${title} | Menco Motorsports`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteUrl}${image}`} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | Menco Motorsports`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteUrl}${image}`} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "AutoRepair",
+      "name": "Menco Motorsports",
+      "description": "Locally owned diesel repair and performance shop specializing in fuel systems, diagnostics, and performance upgrades.",
+      "url": siteUrl,
+      "telephone": "+13372886226",
+      "email": "tucksdieselservices@yahoo.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lafayette",
+        "addressRegion": "LA",
+        "postalCode": "70507",
+        "addressCountry": "US"
+      },
+      "openingHours": "Mo-Fr 07:00-17:00",
+      "priceRange": "$$",
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=61558910277885"
+      ]
+    })} />
+  </head>
+  <body class="bg-brand-black text-brand-light min-h-screen flex flex-col">
+    <Header />
+    <main class="flex-1 pt-16">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
