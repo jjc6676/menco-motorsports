@@ -84,20 +84,26 @@ const resolvedProduct = getProductBySlug(product.slug) ?? product;
               </p>
             </div>
 
+            {resolvedProduct.sizes && resolvedProduct.sizes.length > 0 && (
+              <div class="mt-6 flex items-center gap-4">
+                <span class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gray">Size</span>
+                <select id="product-size" class="flex-1 sm:flex-none sm:w-32 border border-white/10 bg-black/40 px-4 py-3 text-sm font-body text-brand-light outline-none transition focus:border-brand-red focus:ring-1 focus:ring-brand-red">
+                  {resolvedProduct.sizes.map((s: string) => <option value={s}>{s}</option>)}
+                </select>
+              </div>
+            )}
+
             <button
               class:list={[
-                'snipcart-add-item mt-6 w-full rounded-xl border px-5 py-4 text-sm font-semibold uppercase tracking-[0.25em] transition-all duration-200 sm:w-auto',
+                'add-to-cart-btn mt-4 w-full rounded-xl border px-5 py-4 text-sm font-semibold uppercase tracking-[0.25em] transition-all duration-200 sm:w-auto',
                 resolvedProduct.inStock
                   ? 'border-brand-red bg-brand-red text-white hover:bg-brand-redHot hover:shadow-red-glow'
                   : 'cursor-not-allowed border-white/10 bg-white/5 text-brand-gray',
               ]}
-              data-item-id={resolvedProduct.id}
-              data-item-name={resolvedProduct.name}
-              data-item-price={resolvedProduct.price}
-              data-item-url={`/shop/${resolvedProduct.slug}/`}
-              data-item-image={resolvedProduct.image}
-              data-item-description={resolvedProduct.description}
-              data-item-categories={resolvedProduct.category}
+              data-id={resolvedProduct.id}
+              data-name={resolvedProduct.name}
+              data-price={String(Math.round(resolvedProduct.price * 100))}
+              data-has-sizes={resolvedProduct.sizes ? 'true' : 'false'}
               disabled={!resolvedProduct.inStock}
             >
               {resolvedProduct.inStock ? 'Add to Cart' : 'Currently Unavailable'}
@@ -159,3 +165,30 @@ const resolvedProduct = getProductBySlug(product.slug) ?? product;
     </div>
   </section>
 </Layout>
+
+<script>
+  import { addToCart } from '../../lib/cart';
+
+  document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const el = btn as HTMLElement;
+      if (el.hasAttribute('disabled')) return;
+      const id = el.dataset.id!;
+      const name = el.dataset.name!;
+      const price = parseInt(el.dataset.price!, 10);
+      const hasSizes = el.dataset.hasSizes === 'true';
+
+      let size: string | undefined;
+      if (hasSizes) {
+        const select = document.getElementById('product-size') as HTMLSelectElement;
+        size = select?.value;
+      }
+
+      addToCart({ id, name, price, size });
+
+      const original = el.textContent;
+      el.textContent = 'Added!';
+      setTimeout(() => { el.textContent = original; }, 1500);
+    });
+  });
+</script>
