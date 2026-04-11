@@ -1,9 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 const allServices = await getCollection('services');
 const services = allServices.sort((a, b) => a.data.order - b.data.order);
+
+const rendered = await Promise.all(
+  services.map(async (service) => {
+    const { Content } = await render(service);
+    return { service, Content };
+  })
+);
 ---
 
 <Base
@@ -24,18 +31,15 @@ const services = allServices.sort((a, b) => a.data.order - b.data.order);
   <section class="section">
     <div class="container">
       <div class="services-grid">
-        {services.map(async (service) => {
-          const { Content } = await service.render();
-          return (
-            <div class="service-card">
-              <h3>{service.data.title}</h3>
-              <div class="service-body">
-                <Content />
-              </div>
-              <a href="/contact" class="btn btn-ghost">Contact Us About This</a>
+        {rendered.map(({ service, Content }) => (
+          <div class="service-card">
+            <h3>{service.data.title}</h3>
+            <div class="service-body">
+              <Content />
             </div>
-          );
-        })}
+            <a href="/contact" class="btn btn-ghost">Contact Us About This</a>
+          </div>
+        ))}
       </div>
     </div>
   </section>
