@@ -132,6 +132,79 @@ export const products: Product[] = [
     inStock: true,
     featured: false,
   },
+  // ──── MERCH ────
+  {
+    id: 'merch-001',
+    slug: 'menco-logo-tee',
+    name: 'Menco Logo Tee',
+    price: 25.0,
+    category: 'Merch',
+    description:
+      'Black tee with red Menco Motorsports crossed-pistons logo. Rep the brand.',
+    details: [
+      'Black cotton tee',
+      'Red Menco Motorsports logo',
+      'Available in S, M, L, XL, 2XL',
+      'Pay on pickup at the shop',
+    ],
+    image: 'https://placehold.co/800x600/111111/cc0000?text=Menco+Logo+Tee',
+    inStock: true,
+    featured: false,
+  },
+  {
+    id: 'merch-002',
+    slug: 'menco-hoodie',
+    name: 'Menco Hoodie',
+    price: 45.0,
+    category: 'Merch',
+    description:
+      'Black hoodie with embroidered Menco Motorsports logo. Heavy weight, built for the shop.',
+    details: [
+      'Black heavyweight hoodie',
+      'Embroidered Menco Motorsports logo',
+      'Available in S, M, L, XL, 2XL',
+      'Pay on pickup at the shop',
+    ],
+    image: 'https://placehold.co/800x600/111111/cc0000?text=Menco+Hoodie',
+    inStock: true,
+    featured: false,
+  },
+  {
+    id: 'merch-003',
+    slug: 'menco-snapback',
+    name: 'Menco Snapback',
+    price: 30.0,
+    category: 'Merch',
+    description:
+      'Black snapback hat with red Menco Motorsports logo. One size fits most.',
+    details: [
+      'Black snapback cap',
+      'Red embroidered logo',
+      'Adjustable snapback closure',
+      'Pay on pickup at the shop',
+    ],
+    image: 'https://placehold.co/800x600/111111/cc0000?text=Menco+Snapback',
+    inStock: true,
+    featured: false,
+  },
+  {
+    id: 'merch-004',
+    slug: 'menco-sticker-pack',
+    name: 'Logo Sticker Pack',
+    price: 10.0,
+    category: 'Merch',
+    description:
+      'Pack of 3 Menco Motorsports die-cut stickers. Slap them on your toolbox, truck, or cooler.',
+    details: [
+      'Pack of 3 die-cut stickers',
+      'Weather-resistant vinyl',
+      'Menco Motorsports crossed-pistons logo',
+      'Pay on pickup at the shop',
+    ],
+    image: 'https://placehold.co/800x600/111111/cc0000?text=Sticker+Pack',
+    inStock: true,
+    featured: false,
+  },
 ];
 
 export function getProductBySlug(slug: string): Product | undefined {

@@ -1,8 +1,8 @@
 ---
-import Base from '../layouts/Base.astro';
+import Layout from '../layouts/Layout.astro';
 ---
 
-<Base title="Cart" description="Review your merch order and reserve for pickup at Menco Motorsports.">
+<Layout title="Cart" description="Review your merch order and reserve for pickup at Menco Motorsports.">
   <section class="section">
     <div class="container">
       <div class="section-header">
@@ -54,7 +54,7 @@ import Base from '../layouts/Base.astro';
       </div>
     </div>
   </section>
-</Base>
+</Layout>
 
 <script>
   import { getCartItems, removeFromCart, updateQuantity, clearCart, getCartTotal } from '../lib/cart';

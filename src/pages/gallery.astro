@@ -5,67 +5,88 @@ import Layout from '../layouts/Layout.astro';
 // Swap each `image` URL with a real shop photo when media is ready.
 const galleryItems = [
   {
-    title: 'Built for Power',
+    title: 'Fuel System Upgrade',
     category: 'Powerstroke Performance',
-    description: 'Custom calibration, turbo upgrades, and supporting hardware for dependable horsepower.',
+    description: 'Ford F-250 6.7L Powerstroke fuel system upgrade with high-flow injectors and upgraded lines for reliable power.',
     height: 'h-72',
     image: 'https://picsum.photos/seed/menco-1/900/700',
   },
   {
-    title: 'Shop Floor Detail',
-    category: 'Precision Diagnostics',
-    description: 'Hands-on troubleshooting and repair work for hard-use diesel trucks.',
+    title: 'Disaster Prevention Kit',
+    category: 'Preventative Maintenance',
+    description: 'S&S Disaster Prevention Kit installation to protect against catastrophic CP4 pump failure on 6.7L Powerstrokes.',
     height: 'h-96',
     image: 'https://picsum.photos/seed/menco-2/900/900',
   },
   {
-    title: 'Engine Bay Refresh',
-    category: 'Mechanical Upgrades',
-    description: 'Fresh components, clean routing, and a finish that matches the work underneath.',
+    title: 'Misfire Diagnostics',
+    category: 'Precision Diagnostics',
+    description: 'Cylinder misfire diagnostics on Powerstroke using factory scan tools and in-house testing procedures.',
     height: 'h-80',
     image: 'https://picsum.photos/seed/menco-3/900/800',
   },
   {
-    title: 'Track-Ready Stance',
-    category: 'Suspension & Setup',
-    description: 'Dialed-in stance and durability for aggressive street and event use.',
+    title: 'DCR Pump Conversion',
+    category: 'Fuel System',
+    description: 'DCR pump conversion completed, eliminating the factory CP4 and upgrading to a proven gear-driven design.',
     height: 'h-[26rem]',
     image: 'https://picsum.photos/seed/menco-4/900/1100',
   },
   {
-    title: 'Fabrication Corner',
-    category: 'Custom Metalwork',
-    description: 'Purpose-built fabrication with a clean, industrial finish and race-inspired edge.',
+    title: 'CCV Upgrade',
+    category: 'Engine Upgrades',
+    description: 'CCV upgrade on Ford diesel to improve crankcase ventilation and reduce oil contamination in the intake system.',
     height: 'h-64',
     image: 'https://picsum.photos/seed/menco-5/900/650',
   },
   {
-    title: 'Late Night Wrenching',
-    category: 'Shop Culture',
-    description: 'The kind of after-hours work that keeps builds moving and trucks on schedule.',
+    title: 'Hub & Bearing Replacement',
+    category: 'Steering & Suspension',
+    description: 'Front end hub and bearing replacement on a Super Duty for tight, rattle-free steering and safe towing.',
     height: 'h-[22rem]',
     image: 'https://picsum.photos/seed/menco-6/900/950',
   },
   {
-    title: 'Front-End Presence',
-    category: 'Showcase Build',
-    description: 'A finished look with the aggressive black-and-red style Menco is known for.',
+    title: 'Turbo System Service',
+    category: 'Turbo & Intake',
+    description: 'Turbo system service on 6.7L including up-pipe inspection, wastegate check, and boost leak testing.',
     height: 'h-72',
     image: 'https://picsum.photos/seed/menco-7/900/700',
   },
   {
-    title: 'Engine Out Service',
+    title: 'Injector & Valve Cover Reseal',
     category: 'Major Repairs',
-    description: 'Big repairs handled with shop discipline, clear process, and zero shortcuts.',
+    description: 'Injector replacement and valve cover reseal to stop oil leaks and restore proper combustion across all eight cylinders.',
     height: 'h-[22rem]',
     image: 'https://picsum.photos/seed/menco-8/900/950',
   },
   {
-    title: 'Diesel Detail Shot',
-    category: 'Parts & Finish',
-    description: 'Close-up craftsmanship on parts that have to look right and perform harder.',
+    title: 'Electrical Diagnostic Setup',
+    category: 'Diagnostics',
+    description: 'Full electrical diagnostic setup with breakout boxes and wiring harness testing on a late-model Super Duty.',
     height: 'h-60',
     image: 'https://picsum.photos/seed/menco-9/900/600',
+  },
+  {
+    title: '2018 F-250 Performance Build',
+    category: 'Showcase Build',
+    description: '2018 F-250 performance build complete with tuning, exhaust, intake, and fuel system upgrades for serious towing power.',
+    height: 'h-72',
+    image: 'https://picsum.photos/seed/menco-10/900/700',
+  },
+  {
+    title: 'Engine Bay Fuel Repair',
+    category: 'Fuel System',
+    description: 'Diesel engine bay during fuel system repair showing line routing, filter placement, and pump access.',
+    height: 'h-80',
+    image: 'https://picsum.photos/seed/menco-11/900/800',
+  },
+  {
+    title: 'Completed Build Rollout',
+    category: 'Finished Work',
+    description: 'Completed truck leaving the shop after a full fuel system overhaul, ready for the road and heavy loads.',
+    height: 'h-[22rem]',
+    image: 'https://picsum.photos/seed/menco-12/900/950',
   },
 ];
 ---
@@ -80,8 +101,8 @@ const galleryItems = [
       <h1 class="section-heading mt-4">Built in the Shop. Proven on the Road.</h1>
       <span class="red-accent-line"></span>
       <p class="max-w-3xl font-body text-brand-gray text-lg leading-relaxed">
-        A quick look at the work, attitude, and mechanical detail behind Menco Motorsports. These dark placeholders
-        are ready to be swapped with real shop photography whenever the final media set is available.
+        A quick look at the work, attitude, and mechanical detail behind Menco Motorsports. From fuel system overhauls
+        to full performance builds, this is what happens in the shop every day.
       </p>
     </div>
   </section>
