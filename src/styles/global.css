@@ -1,0 +1,178 @@
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-elevated: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-body: #d4d4d4;
+  --text-muted: #888888;
+  --text-dim: #555555;
+  --accent: #c41e1e;
+  --accent-hover: #a51919;
+  --accent-accessible: #e85454;
+  --border: #222222;
+  --success: #22c55e;
+  --warning: #eab308;
+  --error: #ef4444;
+  --info: #3b82f6;
+  --radius: 0px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 80px;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+}
+
+/* Fonts loaded via fontsource in Base.astro */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--accent-accessible);
+  text-decoration: none;
+  transition: color 0.15s ease-out;
+}
+a:hover {
+  color: var(--text-primary);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1.2;
+}
+h1 { font-size: 3rem; font-weight: 800; line-height: 1.1; }
+h2 { font-size: 2rem; font-weight: 800; }
+h3 { font-size: 1rem; font-weight: 700; letter-spacing: 1px; line-height: 1.3; }
+
+:focus-visible {
+  outline: 2px solid var(--accent-accessible);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 100;
+  font-weight: 700;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.section {
+  padding: var(--space-4xl) 0;
+}
+.section-alt {
+  background: var(--bg-surface);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+.section-header h2 {
+  margin-bottom: var(--space-sm);
+}
+.section-header p {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+.section-line {
+  width: 60px;
+  height: 3px;
+  background: var(--accent);
+  margin: var(--space-md) auto 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: background 0.15s ease-out, border-color 0.15s ease-out, color 0.15s ease-out;
+  min-height: 44px;
+  min-width: 44px;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+  color: #fff;
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent-accessible);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--accent-accessible);
+  border: 1px solid var(--accent);
+}
+.btn-ghost:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (max-width: 639px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  .container { padding: 0 20px; }
+  .section { padding: var(--space-2xl) 0; }
+}

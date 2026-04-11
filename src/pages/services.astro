@@ -1,0 +1,181 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const allServices = await getCollection('services');
+const services = allServices.sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base
+  title="Services | Menco Motorsports"
+  description="Diesel repair and performance services from Menco Motorsports in Lafayette, LA. From diagnostics to full builds, we keep your truck running strong."
+>
+  <!-- Hero -->
+  <section class="services-hero">
+    <div class="container">
+      <h1>Our Services</h1>
+      <p class="services-hero-sub">
+        Specialized diesel repair and performance for trucks that work as hard as you do.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services List -->
+  <section class="section">
+    <div class="container">
+      <div class="services-grid">
+        {services.map(async (service) => {
+          const { Content } = await service.render();
+          return (
+            <div class="service-card">
+              <h3>{service.data.title}</h3>
+              <div class="service-body">
+                <Content />
+              </div>
+              <a href="/contact" class="btn btn-ghost">Contact Us About This</a>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Strip -->
+  <section class="cta-strip">
+    <div class="container cta-strip-inner">
+      <h2>Ready to get your truck running right?</h2>
+      <p>Give us a call or stop by the shop. Walk-ins welcome, appointments preferred.</p>
+      <a href="tel:+13372886226" class="btn cta-strip-btn">Call (337) 288-6226</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Services Hero */
+  .services-hero {
+    padding: 6rem 0 3rem;
+    text-align: center;
+  }
+
+  .services-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--text-primary);
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+  }
+
+  .services-hero-sub {
+    color: var(--text-body);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* Services Grid */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-card:hover {
+    border-color: var(--accent);
+  }
+
+  .service-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+  }
+
+  .service-body {
+    color: var(--text-body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    flex: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-body :global(p) {
+    margin: 0 0 0.75rem;
+  }
+
+  .service-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .service-body :global(ul) {
+    padding-left: 1.25rem;
+    margin: 0.5rem 0;
+  }
+
+  .service-body :global(li) {
+    margin-bottom: 0.35rem;
+  }
+
+  /* CTA Strip */
+  .cta-strip {
+    background: var(--accent);
+    padding: 4rem 0;
+  }
+
+  .cta-strip-inner {
+    text-align: center;
+  }
+
+  .cta-strip h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    color: #fff;
+    margin: 0 0 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .cta-strip p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.05rem;
+    margin: 0 0 2rem;
+  }
+
+  .cta-strip-btn {
+    background: #fff;
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.2s;
+  }
+
+  .cta-strip-btn:hover {
+    opacity: 0.9;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .services-hero {
+      padding: 3rem 0 2rem;
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

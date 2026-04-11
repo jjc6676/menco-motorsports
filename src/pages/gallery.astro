@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+
+const galleryItems = [
+  { alt: 'Ford F-250 fuel system upgrade' },
+  { alt: 'Powerstroke 6.7L injector replacement' },
+  { alt: 'Duramax turbo rebuild' },
+  { alt: 'Cummins 5.9 injection pump swap' },
+  { alt: 'Ram 2500 lift kit and alignment' },
+  { alt: 'F-350 EGR delete and tuning' },
+  { alt: 'Silverado 2500HD glow plug replacement' },
+  { alt: 'Powerstroke HPOP rebuild' },
+  { alt: 'Duramax LML CP4 failure repair' },
+  { alt: 'Ford F-450 front end rebuild' },
+  { alt: 'Cummins 6.7 head gasket replacement' },
+  { alt: 'Powerstroke 6.0 bulletproofing' },
+];
+---
+
+<Base title="Gallery" description="See real diesel repair and performance work from Menco Motorsports in Lafayette, LA.">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-line"></div>
+        <h1>Our Work</h1>
+        <p>Real work on real trucks. Every job done right.</p>
+      </div>
+
+      <div class="gallery-grid">
+        {galleryItems.map((item) => (
+          <div class="gallery-item">
+            <div class="gallery-placeholder">
+              <span>{item.alt}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="gallery-follow">
+        <p>Follow us on Facebook for our latest work</p>
+        <a href="https://www.facebook.com/profile.php?id=61558910277885" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Follow on Facebook</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="container cta-strip">
+      <h2>Ready to get your truck in the shop?</h2>
+      <p>Contact us today for a quote or to schedule your service.</p>
+      <a href="/contact" class="btn btn-primary">Get in Touch</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+  }
+
+  .gallery-item {
+    break-inside: avoid;
+  }
+
+  .gallery-placeholder {
+    aspect-ratio: 4 / 3;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    transition: border-color 0.2s ease;
+  }
+
+  .gallery-placeholder span {
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 14px;
+  }
+
+  .gallery-placeholder:hover {
+    border-color: var(--accent);
+  }
+
+  .gallery-follow {
+    text-align: center;
+    margin-top: 64px;
+    padding: 48px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .gallery-follow p {
+    color: var(--text-body);
+    font-family: var(--font-body);
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+
+  .cta-strip {
+    text-align: center;
+    padding: 64px 0;
+  }
+
+  .cta-strip h2 {
+    font-family: var(--font-display);
+    color: var(--text-primary);
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .cta-strip p {
+    color: var(--text-body);
+    font-family: var(--font-body);
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

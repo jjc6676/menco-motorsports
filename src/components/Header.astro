@@ -1,0 +1,200 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/services', label: 'Services' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/merch', label: 'Merch' },
+  { href: '/contact', label: 'Contact' },
+];
+const currentPath = Astro.url.pathname;
+---
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="Menco Motorsports Home">
+      MENCO <span>MOTORSPORTS</span>
+    </a>
+    <nav class="nav-desktop" aria-label="Main navigation">
+      {navLinks.map(link => (
+        <a href={link.href} class:list={['nav-link', { active: currentPath === link.href }]}>
+          {link.label}
+        </a>
+      ))}
+    </nav>
+    <a href="tel:3372886226" class="btn btn-primary header-cta">Call Now</a>
+    <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <div class="mobile-menu-inner">
+    <button class="mobile-close" aria-label="Close menu">&times;</button>
+    <nav aria-label="Mobile navigation">
+      {navLinks.map(link => (
+        <a href={link.href} class="mobile-link">{link.label}</a>
+      ))}
+    </nav>
+    <a href="tel:3372886226" class="mobile-phone">(337) 288-6226</a>
+  </div>
+</div>
+
+<style>
+  .header {
+    background: var(--bg-surface);
+    border-bottom: 2px solid var(--accent);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--text-primary);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .logo span { color: var(--accent-accessible); }
+  .logo:hover { color: var(--text-primary); }
+
+  .nav-desktop {
+    display: flex;
+    gap: 28px;
+  }
+  .nav-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: var(--accent-accessible);
+  }
+
+  .header-cta {
+    padding: 10px 20px;
+    font-size: 0.8125rem;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    min-height: 44px;
+    min-width: 44px;
+    justify-content: center;
+    align-items: center;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: transform 0.25s ease-out;
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-primary);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-out;
+  }
+  .mobile-menu.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mobile-menu-inner {
+    text-align: center;
+  }
+  .mobile-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 2rem;
+    cursor: pointer;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .mobile-link {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 16px 0;
+  }
+  .mobile-link:hover { color: var(--accent-accessible); }
+  .mobile-phone {
+    display: block;
+    margin-top: 32px;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-accessible);
+    text-decoration: none;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 1023px) {
+    .nav-desktop, .header-cta { display: none; }
+    .hamburger { display: flex; }
+  }
+</style>
+
+<script>
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileClose = document.querySelector('.mobile-close');
+
+  function openMenu() {
+    mobileMenu?.classList.add('open');
+    mobileMenu?.setAttribute('aria-hidden', 'false');
+    hamburger?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    mobileMenu?.classList.remove('open');
+    mobileMenu?.setAttribute('aria-hidden', 'true');
+    hamburger?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  hamburger?.addEventListener('click', openMenu);
+  mobileClose?.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+  mobileMenu?.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+</script>

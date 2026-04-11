@@ -1,0 +1,36 @@
+[
+  {
+    "id": "menco-logo-tee",
+    "name": "Menco Logo Tee",
+    "price": 2500,
+    "description": "Black tee with red Menco Motorsports crossed-pistons logo",
+    "photo": "/images/merch/logo-tee.jpg",
+    "sizes": ["S", "M", "L", "XL", "2XL"],
+    "available": true
+  },
+  {
+    "id": "menco-hoodie",
+    "name": "Menco Hoodie",
+    "price": 4500,
+    "description": "Black hoodie with embroidered Menco Motorsports logo",
+    "photo": "/images/merch/hoodie.jpg",
+    "sizes": ["S", "M", "L", "XL", "2XL"],
+    "available": true
+  },
+  {
+    "id": "menco-snapback",
+    "name": "Menco Snapback",
+    "price": 3000,
+    "description": "Black snapback hat with red Menco Motorsports logo",
+    "photo": "/images/merch/snapback.jpg",
+    "available": true
+  },
+  {
+    "id": "menco-sticker-pack",
+    "name": "Logo Sticker Pack",
+    "price": 1000,
+    "description": "Pack of 3 Menco Motorsports die-cut stickers",
+    "photo": "/images/merch/stickers.jpg",
+    "available": true
+  }
+]

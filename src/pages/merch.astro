@@ -1,0 +1,311 @@
+---
+import Base from '../layouts/Base.astro';
+import merchData from '../data/merch.json';
+---
+
+<Base title="Merch" description="Rep the Menco Motorsports brand. Order online and pick up at the shop in Lafayette, LA.">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-line"></div>
+        <h1>Merch</h1>
+        <p>Rep the brand. Order online, pick up at the shop.</p>
+      </div>
+
+      <div class="merch-grid">
+        {merchData.map((item: any) => (
+          <div class="merch-card" data-item-id={item.id}>
+            <div class="merch-photo">
+              <span>{item.name}</span>
+            </div>
+            <div class="merch-info">
+              <h3>{item.name}</h3>
+              <p class="merch-price">${(item.price / 100).toFixed(2)}</p>
+              {item.sizes && item.sizes.length > 0 && (
+                <div class="merch-sizes">
+                  {item.sizes.map((size: string) => (
+                    <span class="size-badge">{size}</span>
+                  ))}
+                </div>
+              )}
+              {item.description && (
+                <p class="merch-desc">{item.description}</p>
+              )}
+              <button class="btn btn-ghost reserve-btn" data-item-id={item.id} data-item-name={item.name} data-item-sizes={item.sizes ? JSON.stringify(item.sizes) : ''}>Reserve for Pickup</button>
+            </div>
+            <div class="order-form-container" id={`form-${item.id}`} style="display:none;"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const reserveBtns = document.querySelectorAll('.reserve-btn');
+
+    reserveBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const itemId = btn.getAttribute('data-item-id')!;
+        const itemName = btn.getAttribute('data-item-name')!;
+        const sizesRaw = btn.getAttribute('data-item-sizes');
+        const sizes: string[] = sizesRaw ? JSON.parse(sizesRaw) : [];
+        const container = document.getElementById(`form-${itemId}`)!;
+
+        if (container.style.display !== 'none') {
+          container.style.display = 'none';
+          container.innerHTML = '';
+          return;
+        }
+
+        const sizeSelect = sizes.length > 0
+          ? `<label class="form-label" for="size-${itemId}">Size</label>
+             <select id="size-${itemId}" name="size" class="form-input" required>
+               <option value="">Select size</option>
+               ${sizes.map(s => `<option value="${s}">${s}</option>`).join('')}
+             </select>`
+          : '';
+
+        container.innerHTML = `
+          <form class="order-form" data-item-id="${itemId}">
+            <h4>Reserve: ${itemName}</h4>
+            <label class="form-label" for="name-${itemId}">Name *</label>
+            <input type="text" id="name-${itemId}" name="name" class="form-input" required />
+
+            <label class="form-label" for="phone-${itemId}">Phone *</label>
+            <input type="tel" id="phone-${itemId}" name="phone" class="form-input" placeholder="(337) 555-0123" required />
+
+            ${sizeSelect}
+
+            <label class="form-label" for="qty-${itemId}">Quantity</label>
+            <input type="number" id="qty-${itemId}" name="quantity" class="form-input" value="1" min="1" max="10" />
+
+            <div style="display:none;">
+              <label for="website-${itemId}">Website</label>
+              <input type="text" id="website-${itemId}" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Submit Order</button>
+            </div>
+            <div class="form-status"></div>
+          </form>
+        `;
+
+        container.style.display = 'block';
+
+        const form = container.querySelector('form')!;
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const statusEl = form.querySelector('.form-status')! as HTMLElement;
+          const submitBtn = form.querySelector('button[type="submit"]')! as HTMLButtonElement;
+
+          const honeypot = (form.querySelector(`#website-${itemId}`) as HTMLInputElement).value;
+          if (honeypot) return;
+
+          const payload: Record<string, any> = {
+            itemId,
+            name: (form.querySelector(`#name-${itemId}`) as HTMLInputElement).value,
+            phone: (form.querySelector(`#phone-${itemId}`) as HTMLInputElement).value,
+            quantity: parseInt((form.querySelector(`#qty-${itemId}`) as HTMLInputElement).value, 10),
+          };
+
+          const sizeEl = form.querySelector(`#size-${itemId}`) as HTMLSelectElement | null;
+          if (sizeEl) {
+            payload.size = sizeEl.value;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Submitting...';
+          statusEl.className = 'form-status';
+          statusEl.textContent = '';
+
+          try {
+            const res = await fetch('/api/order', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) throw new Error('Request failed');
+
+            const data = await res.json();
+            statusEl.className = 'form-status success';
+            statusEl.textContent = `Order received! Ref: ${data.refNumber || 'MENCO-' + Date.now().toString(36).toUpperCase()}. We'll reach out to confirm pickup.`;
+            submitBtn.style.display = 'none';
+          } catch {
+            statusEl.className = 'form-status error';
+            statusEl.innerHTML = 'Something went wrong. <button type="button" class="retry-btn">Try Again</button>';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Order';
+
+            statusEl.querySelector('.retry-btn')?.addEventListener('click', () => {
+              form.dispatchEvent(new Event('submit'));
+            });
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .merch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .merch-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+  }
+
+  .merch-photo {
+    aspect-ratio: 1 / 1;
+    background: var(--bg-elevated);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .merch-photo span {
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 14px;
+  }
+
+  .merch-info {
+    padding: 20px;
+  }
+
+  .merch-info h3 {
+    font-family: var(--font-display);
+    color: var(--text-primary);
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .merch-price {
+    color: var(--accent-accessible);
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .merch-sizes {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .size-badge {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 12px;
+    padding: 2px 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .merch-desc {
+    color: var(--text-body);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .order-form-container {
+    border-top: 1px solid var(--border);
+  }
+
+  .order-form {
+    padding: 20px;
+  }
+
+  .order-form h4 {
+    font-family: var(--font-display);
+    color: var(--text-primary);
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-body);
+    margin-bottom: 6px;
+    margin-top: 12px;
+  }
+
+  .form-input {
+    width: 100%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    padding: 12px 16px;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+
+  .form-input:focus {
+    border-color: var(--accent);
+  }
+
+  .form-actions {
+    margin-top: 20px;
+  }
+
+  .form-status {
+    margin-top: 12px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .form-status.success {
+    color: #4ade80;
+  }
+
+  .form-status.error {
+    color: var(--accent-accessible);
+  }
+
+  .retry-btn {
+    background: none;
+    border: none;
+    color: var(--accent-accessible);
+    text-decoration: underline;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 0;
+    margin-left: 4px;
+  }
+
+  @media (max-width: 1024px) {
+    .merch-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .merch-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

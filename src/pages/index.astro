@@ -1,0 +1,332 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import merchData from '../data/merch.json';
+
+const allServices = await getCollection('services');
+const services = allServices
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
+
+const merch = merchData.slice(0, 3);
+---
+
+<Base
+  title="Menco Motorsports | Diesel Performance & Repair in Lafayette, LA"
+  description="Lafayette's trusted diesel repair and performance shop. Specializing in truck repair, performance upgrades, diagnostics, and more."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner container">
+      <div class="hero-content">
+        <span class="hero-badge">Lafayette, LA</span>
+        <h1>Diesel Performance & Repair <span class="accent">Done Right.</span></h1>
+        <p class="hero-sub">
+          From routine maintenance to full performance builds, Menco Motorsports keeps your diesel running strong. Trusted by truck owners across Acadiana.
+        </p>
+        <div class="hero-ctas">
+          <a href="tel:+13372886226" class="btn btn-primary">Call (337) 288-6226</a>
+          <a href="/services" class="btn btn-secondary">View Services</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-placeholder">[Truck photo]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Preview -->
+  <section class="section-alt">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-line"></div>
+        <h2>Our Services</h2>
+      </div>
+      <div class="services-grid">
+        {services.map((service) => (
+          <div class="service-card">
+            <h3>{service.data.title}</h3>
+            <p>{service.data.description}</p>
+          </div>
+        ))}
+      </div>
+      <div class="section-footer">
+        <a href="/services" class="btn btn-secondary">View All Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Strip -->
+  <section class="cta-strip">
+    <div class="container cta-strip-inner">
+      <h2>Ready to get your truck running right?</h2>
+      <p>Give us a call or stop by the shop. Walk-ins welcome, appointments preferred.</p>
+      <a href="tel:+13372886226" class="btn cta-strip-btn">Call (337) 288-6226</a>
+    </div>
+  </section>
+
+  <!-- Merch Preview -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-line"></div>
+        <h2>Merch</h2>
+      </div>
+      <div class="merch-grid">
+        {merch.map((item) => (
+          <div class="merch-card">
+            <div class="merch-placeholder">[Photo]</div>
+            <div class="merch-info">
+              <h4>{item.name}</h4>
+              <p class="merch-price">${(item.price / 100).toFixed(2)}</p>
+              <a href="/merch" class="btn btn-ghost">Reserve for Pickup</a>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="section-footer">
+        <a href="/merch" class="btn btn-secondary">Shop All Merch</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 6rem 0 4rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 255, 255, 0.015) 10px,
+      rgba(255, 255, 255, 0.015) 20px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-accessible);
+    border: 1px solid var(--accent);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin: 0 0 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .hero h1 .accent {
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    color: var(--text-body);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 500px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--bg-elevated);
+    border: 2px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 1rem;
+  }
+
+  /* Services Grid */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .service-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: border-color 0.2s;
+  }
+
+  .service-card:hover {
+    border-color: var(--accent);
+  }
+
+  .service-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin: 0 0 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .service-card p {
+    color: var(--text-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Section Footer */
+  .section-footer {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  /* CTA Strip */
+  .cta-strip {
+    background: var(--accent);
+    padding: 4rem 0;
+  }
+
+  .cta-strip-inner {
+    text-align: center;
+  }
+
+  .cta-strip h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    color: #fff;
+    margin: 0 0 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .cta-strip p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.05rem;
+    margin: 0 0 2rem;
+  }
+
+  .cta-strip-btn {
+    background: #fff;
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.2s;
+  }
+
+  .cta-strip-btn:hover {
+    opacity: 0.9;
+  }
+
+  /* Merch Grid */
+  .merch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .merch-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    transition: border-color 0.2s;
+  }
+
+  .merch-card:hover {
+    border-color: var(--accent);
+  }
+
+  .merch-placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--bg-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .merch-info {
+    padding: 1.25rem;
+  }
+
+  .merch-info h4 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .merch-price {
+    color: var(--accent-accessible);
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero {
+      padding: 3rem 0;
+    }
+
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-image {
+      order: -1;
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .merch-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

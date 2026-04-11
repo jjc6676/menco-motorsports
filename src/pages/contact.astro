@@ -1,0 +1,319 @@
+---
+import Base from '../layouts/Base.astro';
+
+const services = [
+  'General Inquiry',
+  'Fuel Systems',
+  'Diagnostics & Repair',
+  'Performance',
+  'Preventative Maintenance',
+  'Front End & Suspension',
+  'Electrical',
+];
+---
+
+<Base title="Contact" description="Get in touch with Menco Motorsports in Lafayette, LA for diesel repair, performance, and maintenance.">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-line"></div>
+        <h1>Contact Us</h1>
+        <p>Get in touch. We'll get back to you shortly.</p>
+      </div>
+
+      <div class="contact-layout">
+        <div class="contact-sidebar">
+          <div class="info-block">
+            <h3>Phone</h3>
+            <a href="tel:+13372005823" class="info-phone">(337) 200-5823</a>
+          </div>
+
+          <div class="info-block">
+            <h3>Email</h3>
+            <a href="mailto:menco.motorsports@yahoo.com" class="info-link">menco.motorsports@yahoo.com</a>
+          </div>
+
+          <div class="info-block">
+            <h3>Location</h3>
+            <p>Lafayette, LA 70507</p>
+          </div>
+
+          <div class="info-block">
+            <h3>Hours</h3>
+            <p>Always Open</p>
+          </div>
+
+          <div class="info-block">
+            <h3>Follow Us</h3>
+            <a href="https://www.facebook.com/profile.php?id=61558910277885" target="_blank" rel="noopener noreferrer" class="info-link">Facebook</a>
+          </div>
+
+          <div class="map-placeholder">
+            <span>[Google Maps embed]</span>
+          </div>
+        </div>
+
+        <div class="contact-form-wrap">
+          <form id="contact-form" class="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="contact-name">Name *</label>
+                <input type="text" id="contact-name" name="name" class="form-input" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contact-email">Email *</label>
+                <input type="email" id="contact-email" name="email" class="form-input" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="contact-phone">Phone</label>
+                <input type="tel" id="contact-phone" name="phone" class="form-input" placeholder="(337) 555-0123" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contact-service">Service</label>
+                <select id="contact-service" name="service" class="form-input">
+                  <option value="">Select a service</option>
+                  {services.map((s) => (
+                    <option value={s}>{s}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contact-message">Message *</label>
+              <textarea id="contact-message" name="message" class="form-input form-textarea" rows={6} required></textarea>
+            </div>
+
+            <div style="display:none;">
+              <label for="contact-website">Website</label>
+              <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="contact-submit">Send Message</button>
+            </div>
+
+            <div class="form-status" id="contact-status"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const statusEl = document.getElementById('contact-status')!;
+    const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const honeypot = (document.getElementById('contact-website') as HTMLInputElement).value;
+      if (honeypot) return;
+
+      const payload = {
+        name: (document.getElementById('contact-name') as HTMLInputElement).value,
+        email: (document.getElementById('contact-email') as HTMLInputElement).value,
+        phone: (document.getElementById('contact-phone') as HTMLInputElement).value,
+        service: (document.getElementById('contact-service') as HTMLSelectElement).value,
+        message: (document.getElementById('contact-message') as HTMLTextAreaElement).value,
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      statusEl.className = 'form-status';
+      statusEl.textContent = '';
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) throw new Error('Request failed');
+
+        statusEl.className = 'form-status success';
+        statusEl.textContent = 'Message sent! We\'ll get back to you shortly.';
+        form.reset();
+        submitBtn.textContent = 'Sent';
+      } catch {
+        statusEl.className = 'form-status error';
+        statusEl.textContent = 'Something went wrong. Please try again or call us directly.';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+      }
+    });
+  });
+</script>
+
+<style>
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    gap: 48px;
+    margin-top: 48px;
+  }
+
+  .contact-sidebar {
+    order: 1;
+  }
+
+  .contact-form-wrap {
+    order: 2;
+  }
+
+  .info-block {
+    margin-bottom: 28px;
+  }
+
+  .info-block h3 {
+    font-family: var(--font-display);
+    color: var(--text-muted);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .info-block p {
+    color: var(--text-body);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .info-phone {
+    color: var(--accent-accessible);
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 600;
+    text-decoration: none;
+    display: block;
+  }
+
+  .info-phone:hover {
+    color: var(--accent);
+  }
+
+  .info-link {
+    color: var(--text-body);
+    font-family: var(--font-body);
+    font-size: 16px;
+    text-decoration: none;
+  }
+
+  .info-link:hover {
+    color: var(--accent-accessible);
+  }
+
+  .map-placeholder {
+    margin-top: 32px;
+    aspect-ratio: 4 / 3;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .map-placeholder span {
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 14px;
+  }
+
+  .contact-form {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-body);
+    margin-bottom: 6px;
+  }
+
+  .form-input {
+    width: 100%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    padding: 12px 16px;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+
+  .form-input:focus {
+    border-color: var(--accent);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-actions {
+    margin-top: 8px;
+  }
+
+  .form-status {
+    margin-top: 16px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .form-status.success {
+    color: #4ade80;
+  }
+
+  .form-status.error {
+    color: var(--accent-accessible);
+  }
+
+  @media (max-width: 768px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-sidebar {
+      order: 0;
+    }
+
+    .contact-form-wrap {
+      order: 1;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-form {
+      padding: 24px;
+    }
+  }
+</style>
