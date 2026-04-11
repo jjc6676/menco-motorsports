@@ -91,9 +91,18 @@ const formatPrice = (price: number) =>
                 </a>
               </div>
 
+              {product.sizes && product.sizes.length > 0 && (
+                <div class="mt-4 flex items-center gap-3">
+                  <span class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gray">Size</span>
+                  <select class="size-select flex-1 border border-white/10 bg-black/40 px-3 py-2 text-sm font-body text-brand-light outline-none transition focus:border-brand-red focus:ring-1 focus:ring-brand-red" data-for={product.id}>
+                    {product.sizes.map((s: string) => <option value={s}>{s}</option>)}
+                  </select>
+                </div>
+              )}
+
               <button
                 class:list={[
-                  'add-to-cart-btn mt-6 w-full rounded-xl border px-4 py-3 text-sm font-semibold uppercase tracking-[0.25em] transition-all duration-200',
+                  'add-to-cart-btn mt-4 w-full rounded-xl border px-4 py-3 text-sm font-semibold uppercase tracking-[0.25em] transition-all duration-200',
                   product.inStock
                     ? 'border-brand-red bg-brand-red text-white hover:bg-brand-redHot hover:shadow-red-glow'
                     : 'cursor-not-allowed border-white/10 bg-white/5 text-brand-gray',
@@ -101,6 +110,7 @@ const formatPrice = (price: number) =>
                 data-id={product.id}
                 data-name={product.name}
                 data-price={String(Math.round(product.price * 100))}
+                data-has-sizes={product.sizes ? 'true' : 'false'}
                 disabled={!product.inStock}
               >
                 {product.inStock ? 'Add to Cart' : 'Unavailable'}
@@ -123,8 +133,15 @@ const formatPrice = (price: number) =>
       const id = el.dataset.id!;
       const name = el.dataset.name!;
       const price = parseInt(el.dataset.price!, 10);
+      const hasSizes = el.dataset.hasSizes === 'true';
 
-      addToCart({ id, name, price });
+      let size: string | undefined;
+      if (hasSizes) {
+        const select = el.closest('article')?.querySelector(`.size-select[data-for="${id}"]`) as HTMLSelectElement;
+        size = select?.value;
+      }
+
+      addToCart({ id, name, price, size });
 
       const original = el.textContent;
       el.textContent = 'Added!';

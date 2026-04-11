@@ -9,6 +9,7 @@ export interface Product {
   image: string;
   inStock: boolean;
   featured: boolean;
+  sizes?: string[];
 }
 
 export const products: Product[] = [
@@ -150,6 +151,7 @@ export const products: Product[] = [
     image: 'https://placehold.co/800x600/111111/cc0000?text=Menco+Logo+Tee',
     inStock: true,
     featured: false,
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
   },
   {
     id: 'merch-002',
@@ -168,6 +170,7 @@ export const products: Product[] = [
     image: 'https://placehold.co/800x600/111111/cc0000?text=Menco+Hoodie',
     inStock: true,
     featured: false,
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
   },
   {
     id: 'merch-003',
