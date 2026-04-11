@@ -30,7 +30,7 @@ const merch = merchData.slice(0, 3);
         </div>
       </div>
       <div class="hero-image">
-        <div class="hero-placeholder">[Truck photo]</div>
+        <img src="/images/hero.jpg" alt="Menco Motorsports mechanic working on a diesel truck engine in Lafayette, LA" loading="eager" />
       </div>
     </div>
   </section>
@@ -162,17 +162,12 @@ const merch = merchData.slice(0, 3);
     flex-wrap: wrap;
   }
 
-  .hero-placeholder {
+  .hero-image img {
     width: 100%;
-    aspect-ratio: 4 / 3;
-    background: var(--bg-elevated);
-    border: 2px dashed var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    font-family: var(--font-body);
-    font-size: 1rem;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 3 / 4;
+    border-left: 2px solid var(--accent);
   }
 
   /* Services Grid */
@@ -212,7 +207,8 @@ const merch = merchData.slice(0, 3);
   /* Section Footer */
   .section-footer {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
   }
 
   /* CTA Strip */

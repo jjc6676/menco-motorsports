@@ -1,0 +1,387 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Cart" description="Review your merch order and reserve for pickup at Menco Motorsports.">
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-line"></div>
+        <h1>Your Cart</h1>
+      </div>
+
+      <div id="cart-empty" class="cart-empty" style="display:none;">
+        <p>Your cart is empty.</p>
+        <a href="/merch" class="btn btn-secondary">Browse Merch</a>
+      </div>
+
+      <div id="cart-content" style="display:none;">
+        <div id="cart-items" class="cart-items"></div>
+
+        <div class="cart-summary">
+          <div class="cart-total">
+            <span>Total:</span>
+            <span id="cart-total-price" class="total-price">$0.00</span>
+          </div>
+          <p class="cart-note">Pay when you pick up at the shop. No payment required now.</p>
+        </div>
+
+        <div class="checkout-form">
+          <h2>Your Info</h2>
+          <p class="form-sub">We'll text or call when your order is ready for pickup.</p>
+
+          <form id="checkout-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="checkout-name">Name *</label>
+                <input type="text" id="checkout-name" class="form-input" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="checkout-phone">Phone *</label>
+                <input type="tel" id="checkout-phone" class="form-input" placeholder="(337) 555-0123" required />
+              </div>
+            </div>
+            <div style="display:none;">
+              <label for="checkout-website">Website</label>
+              <input type="text" id="checkout-website" tabindex="-1" autocomplete="off" />
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="submit-btn">Place Order</button>
+            </div>
+            <div id="form-status" class="form-status"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { getCartItems, removeFromCart, updateQuantity, clearCart, getCartTotal } from '../lib/cart';
+
+  function formatPrice(cents: number) {
+    return '$' + (cents / 100).toFixed(2);
+  }
+
+  function renderCart() {
+    const items = getCartItems();
+    const emptyEl = document.getElementById('cart-empty')!;
+    const contentEl = document.getElementById('cart-content')!;
+    const itemsEl = document.getElementById('cart-items')!;
+    const totalEl = document.getElementById('cart-total-price')!;
+
+    if (items.length === 0) {
+      emptyEl.style.display = 'block';
+      contentEl.style.display = 'none';
+      return;
+    }
+
+    emptyEl.style.display = 'none';
+    contentEl.style.display = 'block';
+
+    itemsEl.innerHTML = items.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <h3>${item.name}</h3>
+          ${item.size ? `<span class="cart-item-size">Size: ${item.size}</span>` : ''}
+          <span class="cart-item-price">${formatPrice(item.price)}</span>
+        </div>
+        <div class="cart-item-actions">
+          <div class="qty-control">
+            <button class="qty-btn" data-action="decrease" data-id="${item.id}" data-size="${item.size || ''}">-</button>
+            <span class="qty-value">${item.quantity}</span>
+            <button class="qty-btn" data-action="increase" data-id="${item.id}" data-size="${item.size || ''}">+</button>
+          </div>
+          <span class="cart-item-subtotal">${formatPrice(item.price * item.quantity)}</span>
+          <button class="remove-btn" data-id="${item.id}" data-size="${item.size || ''}" aria-label="Remove ${item.name}">✕</button>
+        </div>
+      </div>
+    `).join('');
+
+    totalEl.textContent = formatPrice(getCartTotal());
+
+    // Wire up quantity buttons
+    itemsEl.querySelectorAll('.qty-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = btn as HTMLElement;
+        const id = el.dataset.id!;
+        const size = el.dataset.size || undefined;
+        const action = el.dataset.action;
+        const item = items.find(i => i.id === id && (i.size || '') === (size || ''));
+        if (!item) return;
+        const newQty = action === 'increase' ? item.quantity + 1 : item.quantity - 1;
+        if (newQty < 1) {
+          removeFromCart(id, size);
+        } else {
+          updateQuantity(id, size, newQty);
+        }
+        renderCart();
+      });
+    });
+
+    // Wire up remove buttons
+    itemsEl.querySelectorAll('.remove-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = btn as HTMLElement;
+        removeFromCart(el.dataset.id!, el.dataset.size || undefined);
+        renderCart();
+      });
+    });
+  }
+
+  // Checkout submit
+  document.getElementById('checkout-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const statusEl = document.getElementById('form-status')!;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const honeypot = (document.getElementById('checkout-website') as HTMLInputElement).value;
+    if (honeypot) return;
+
+    const name = (document.getElementById('checkout-name') as HTMLInputElement).value;
+    const phone = (document.getElementById('checkout-phone') as HTMLInputElement).value;
+    const items = getCartItems();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    statusEl.className = 'form-status';
+    statusEl.textContent = '';
+
+    try {
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          itemId: items.map(i => `${i.name}${i.size ? ' (' + i.size + ')' : ''} x${i.quantity}`).join(', '),
+          name,
+          phone,
+          quantity: items.reduce((sum, i) => sum + i.quantity, 0),
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.errors?.join(', ') || 'Request failed');
+      }
+
+      clearCart();
+      statusEl.className = 'form-status success';
+      statusEl.innerHTML = `Order received! Ref: <strong>${data.ref}</strong>. We'll have it ready for pickup.`;
+      submitBtn.style.display = 'none';
+      document.getElementById('cart-items')!.innerHTML = '';
+      document.querySelector('.cart-summary')!.setAttribute('style', 'display:none');
+      window.dispatchEvent(new CustomEvent('cart-updated', { detail: [] }));
+    } catch (err: any) {
+      statusEl.className = 'form-status error';
+      statusEl.textContent = err.message || 'Something went wrong. Please try again or call (337) 288-6226.';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Place Order';
+    }
+  });
+
+  renderCart();
+</script>
+
+<style>
+  .cart-empty {
+    text-align: center;
+    padding: 80px 0;
+  }
+  .cart-empty p {
+    color: var(--text-muted);
+    font-size: 1.125rem;
+    margin-bottom: 24px;
+  }
+
+  .cart-items {
+    margin-bottom: 32px;
+  }
+
+  :global(.cart-item) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+  :global(.cart-item-info h3) {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 4px;
+  }
+  :global(.cart-item-size) {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-right: 12px;
+  }
+  :global(.cart-item-price) {
+    color: var(--text-muted);
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+  :global(.cart-item-actions) {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  :global(.qty-control) {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+  :global(.qty-btn) {
+    background: var(--bg-elevated);
+    border: none;
+    color: var(--text-primary);
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+  }
+  :global(.qty-btn:hover) {
+    background: var(--accent);
+    color: #fff;
+  }
+  :global(.qty-value) {
+    width: 40px;
+    text-align: center;
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    background: var(--bg-primary);
+    height: 36px;
+    line-height: 36px;
+  }
+  :global(.cart-item-subtotal) {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--accent-accessible);
+    min-width: 70px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  :global(.remove-btn) {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  :global(.remove-btn:hover) {
+    color: var(--accent-accessible);
+  }
+
+  .cart-summary {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-bottom: 48px;
+  }
+  .cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cart-total span:first-child {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .total-price {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-accessible);
+    font-variant-numeric: tabular-nums;
+  }
+  .cart-note {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 8px;
+  }
+
+  .checkout-form {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+  }
+  .checkout-form h2 {
+    margin-bottom: 4px;
+  }
+  .form-sub {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-body);
+    margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    padding: 12px 16px;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+  .form-input:focus {
+    border-color: var(--accent);
+    outline: 2px solid var(--accent-accessible);
+    outline-offset: 2px;
+  }
+  .form-actions {
+    margin-top: 24px;
+  }
+  .form-status {
+    margin-top: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  :global(.form-status.success) {
+    color: #4ade80;
+  }
+  :global(.form-status.error) {
+    color: var(--accent-accessible);
+  }
+
+  @media (max-width: 640px) {
+    .form-row { grid-template-columns: 1fr; }
+    :global(.cart-item) { flex-direction: column; gap: 16px; align-items: flex-start; }
+    :global(.cart-item-actions) { width: 100%; justify-content: space-between; }
+  }
+</style>
