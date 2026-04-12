@@ -149,14 +149,34 @@ const galleryItems = [
 
   <div
     id="gallery-lightbox"
-    class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/90 px-4 py-8"
+    class="fixed inset-0 z-[70] hidden bg-black/90 lg:items-center lg:justify-center lg:px-4 lg:py-8"
     aria-hidden="true"
   >
-    <div class="absolute inset-0" data-lightbox-close></div>
-    <div class="relative z-10 w-full max-w-4xl border border-white/10 bg-brand-dark shadow-2xl shadow-black/60">
+    <!-- Desktop: click backdrop to close -->
+    <div class="absolute inset-0 hidden lg:block" data-lightbox-close></div>
+
+    <!-- Mobile: full-screen slide-up panel / Desktop: centered modal -->
+    <div class="relative z-10 h-full w-full overflow-y-auto bg-brand-dark lg:h-auto lg:max-h-[90vh] lg:max-w-4xl lg:overflow-visible lg:border lg:border-white/10 lg:shadow-2xl lg:shadow-black/60">
+
+      <!-- Mobile close bar -->
+      <div class="sticky top-0 z-20 flex items-center justify-between border-b border-white/10 bg-brand-dark/95 backdrop-blur-sm px-4 py-3 lg:hidden">
+        <span class="font-body text-xs uppercase tracking-[0.3em] text-brand-gray">Gallery Preview</span>
+        <button
+          type="button"
+          class="inline-flex h-10 w-10 items-center justify-center border border-white/10 text-brand-light transition hover:border-brand-red hover:text-brand-red"
+          data-lightbox-close
+          aria-label="Close gallery"
+        >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Desktop close button -->
       <button
         type="button"
-        class="absolute right-3 top-3 z-20 inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-black/70 text-brand-light transition hover:border-brand-red hover:text-brand-red"
+        class="absolute right-3 top-3 z-20 hidden lg:inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-black/70 text-brand-light transition hover:border-brand-red hover:text-brand-red"
         data-lightbox-close
         aria-label="Close gallery lightbox"
       >
@@ -166,26 +186,26 @@ const galleryItems = [
       </button>
 
       <div class="grid gap-0 lg:grid-cols-[1.25fr_0.75fr]">
-        <div class="relative min-h-[24rem] overflow-hidden bg-black">
+        <div class="relative h-64 sm:h-80 lg:min-h-[24rem] overflow-hidden bg-black">
           <img id="lightbox-image" src="" alt="" class="absolute inset-0 h-full w-full object-cover" />
           <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.05)_0%,rgba(10,10,10,0.25)_100%)]"></div>
-          <div class="absolute left-6 top-6 border border-white/10 bg-black/60 px-3 py-2 font-body text-[0.68rem] uppercase tracking-[0.3em] text-brand-light/70">
+          <div class="absolute left-6 top-6 hidden lg:block border border-white/10 bg-black/60 px-3 py-2 font-body text-[0.68rem] uppercase tracking-[0.3em] text-brand-light/70">
             Gallery Preview
           </div>
         </div>
 
-        <div class="flex flex-col justify-between border-t border-white/10 p-6 lg:border-l lg:border-t-0">
+        <div class="flex flex-col justify-between border-t border-white/10 p-5 sm:p-6 lg:border-l lg:border-t-0">
           <div>
             <p id="lightbox-category" class="font-body text-xs uppercase tracking-[0.3em] text-brand-red"></p>
             <p id="lightbox-title" class="mt-2 font-heading text-2xl uppercase tracking-wide text-brand-light"></p>
             <span class="red-accent-line"></span>
             <ul id="lightbox-bullets" class="hidden mb-4 space-y-1.5 font-body text-sm text-brand-gray"></ul>
-            <p id="lightbox-description" class="font-body text-base leading-relaxed text-brand-gray"></p>
+            <p id="lightbox-description" class="font-body text-sm sm:text-base leading-relaxed text-brand-gray"></p>
 
-            <div id="lightbox-thumbnails" class="hidden mt-6 flex gap-2 flex-wrap"></div>
+            <div id="lightbox-thumbnails" class="hidden mt-4 sm:mt-6 flex gap-2 flex-wrap"></div>
           </div>
 
-          <div class="mt-8 border-t border-white/10 pt-6">
+          <div class="mt-6 sm:mt-8 border-t border-white/10 pt-5 sm:pt-6">
             <a href="/contact" class="btn-red w-full text-center sm:w-auto">Book Your Build</a>
           </div>
         </div>
@@ -269,7 +289,7 @@ const galleryItems = [
       }
 
       lightbox.classList.remove('hidden');
-      lightbox.classList.add('flex');
+      lightbox.classList.add('lg:flex');
       lightbox.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
 
@@ -280,7 +300,7 @@ const galleryItems = [
     const closeLightbox = () => {
       if (!lightbox) return;
       lightbox.classList.add('hidden');
-      lightbox.classList.remove('flex');
+      lightbox.classList.remove('lg:flex');
       lightbox.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       previousActiveElement?.focus();
