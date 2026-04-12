@@ -28,8 +28,6 @@ const galleryItems = [
       '/images/gallery/2019%20F-250/ccv-filter.jpg',
       '/images/gallery/2019%20F-250/intake-clean.jpg',
       '/images/gallery/2019%20F-250/intake-component.jpg',
-      '/images/gallery/2019%20F-250/intake-before.jpg',
-      '/images/gallery/2019%20F-250/intake-dirty.jpg',
     ],
   },
   {
@@ -77,8 +75,6 @@ const galleryItems = [
       '/images/gallery/Knocking%20out%20jobs/white-chevy.jpg',
       '/images/gallery/Knocking%20out%20jobs/silver-truck.jpg',
       '/images/gallery/Knocking%20out%20jobs/service-van.jpg',
-      '/images/gallery/Knocking%20out%20jobs/gray-ford.jpg',
-      '/images/gallery/Knocking%20out%20jobs/fleet-shot.jpg',
     ],
   },
 ];
@@ -246,7 +242,7 @@ const galleryItems = [
 
       if (lightboxThumbnails) {
         const rawImages = trigger.dataset.images ?? '';
-        const images: string[] = rawImages ? JSON.parse(rawImages) : [];
+        const images: string[] = rawImages ? JSON.parse(rawImages).slice(0, 4) : [];
         if (images.length > 1) {
           const thumbButtons: HTMLButtonElement[] = images.map((src) => {
             const btn = document.createElement('button');
