@@ -1,92 +1,85 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Placeholder photos via picsum.photos (deterministic via seed).
-// Swap each `image` URL with a real shop photo when media is ready.
 const galleryItems = [
   {
-    title: 'Fuel System Upgrade',
-    category: 'Powerstroke Performance',
-    description: 'Ford F-250 6.7L Powerstroke fuel system upgrade with high-flow injectors and upgraded lines for reliable power.',
-    height: 'h-72',
-    image: 'https://picsum.photos/seed/menco-1/900/700',
-  },
-  {
-    title: 'Disaster Prevention Kit',
-    category: 'Preventative Maintenance',
-    description: 'S&S Disaster Prevention Kit installation to protect against catastrophic CP4 pump failure on 6.7L Powerstrokes.',
-    height: 'h-96',
-    image: 'https://picsum.photos/seed/menco-2/900/900',
-  },
-  {
-    title: 'Misfire Diagnostics',
-    category: 'Precision Diagnostics',
-    description: 'Cylinder misfire diagnostics on Powerstroke using factory scan tools and in-house testing procedures.',
-    height: 'h-80',
-    image: 'https://picsum.photos/seed/menco-3/900/800',
-  },
-  {
-    title: 'DCR Pump Conversion',
-    category: 'Fuel System',
-    description: 'DCR pump conversion completed, eliminating the factory CP4 and upgrading to a proven gear-driven design.',
-    height: 'h-[26rem]',
-    image: 'https://picsum.photos/seed/menco-4/900/1100',
-  },
-  {
-    title: 'CCV Upgrade',
-    category: 'Engine Upgrades',
-    description: 'CCV upgrade on Ford diesel to improve crankcase ventilation and reduce oil contamination in the intake system.',
-    height: 'h-64',
-    image: 'https://picsum.photos/seed/menco-5/900/650',
-  },
-  {
-    title: 'Hub & Bearing Replacement',
-    category: 'Steering & Suspension',
-    description: 'Front end hub and bearing replacement on a Super Duty for tight, rattle-free steering and safe towing.',
-    height: 'h-[22rem]',
-    image: 'https://picsum.photos/seed/menco-6/900/950',
-  },
-  {
-    title: 'Turbo System Service',
-    category: 'Turbo & Intake',
-    description: 'Turbo system service on 6.7L including up-pipe inspection, wastegate check, and boost leak testing.',
-    height: 'h-72',
-    image: 'https://picsum.photos/seed/menco-7/900/700',
-  },
-  {
-    title: 'Injector & Valve Cover Reseal',
-    category: 'Major Repairs',
-    description: 'Injector replacement and valve cover reseal to stop oil leaks and restore proper combustion across all eight cylinders.',
-    height: 'h-[22rem]',
-    image: 'https://picsum.photos/seed/menco-8/900/950',
-  },
-  {
-    title: 'Electrical Diagnostic Setup',
-    category: 'Diagnostics',
-    description: 'Full electrical diagnostic setup with breakout boxes and wiring harness testing on a late-model Super Duty.',
-    height: 'h-60',
-    image: 'https://picsum.photos/seed/menco-9/900/600',
-  },
-  {
-    title: '2018 F-250 Performance Build',
+    title: '2018 Ford 6.7L — DCR Build',
     category: 'Showcase Build',
-    description: '2018 F-250 performance build complete with tuning, exhaust, intake, and fuel system upgrades for serious towing power.',
-    height: 'h-72',
-    image: 'https://picsum.photos/seed/menco-10/900/700',
+    description: 'This 2018 Ford F-250 6.7L came in for a full reliability and performance build. Every system that needed attention got it. Done right.',
+    bullets: ['DCR conversion', 'CCV upgrade', 'Select power mods', 'New bearing & hub assemblies'],
+    height: 'h-[26rem]',
+    objectPosition: 'object-bottom',
+    image: '/images/gallery/2018%20Ford%206.7L/truck-exterior.jpg',
+    images: [
+      '/images/gallery/2018%20Ford%206.7L/truck-exterior.jpg',
+      '/images/gallery/2018%20Ford%206.7L/engine-bay.jpg',
+      '/images/gallery/2018%20Ford%206.7L/turbo-closeup.jpg',
+    ],
   },
   {
-    title: 'Engine Bay Fuel Repair',
+    title: '2019 F-250 — Prevention Kit',
+    category: 'Preventative Maintenance',
+    description: 'This 2019 F-250 came in for a full preventative package. Intake cleaned, filter replaced, and the CP4 protected. Ready for many more miles.',
+    bullets: ['S&S Disaster Prevention Kit', 'New CCV filter', 'Full intake cleaning'],
+    height: 'h-[26rem]',
+    image: '/images/gallery/2019%20F-250/truck-exterior.jpg',
+    images: [
+      '/images/gallery/2019%20F-250/truck-exterior.jpg',
+      '/images/gallery/2019%20F-250/ccv-filter.jpg',
+      '/images/gallery/2019%20F-250/intake-clean.jpg',
+      '/images/gallery/2019%20F-250/intake-component.jpg',
+      '/images/gallery/2019%20F-250/intake-before.jpg',
+      '/images/gallery/2019%20F-250/intake-dirty.jpg',
+    ],
+  },
+  {
+    title: 'CAT D4 — Fuel Pump',
+    category: 'Heavy Equipment',
+    description: 'Service call out in the field — fuel pump replacement on a CAT D4. Back up and running strong.',
+    height: 'h-[26rem]',
+    image: '/images/gallery/CAT%20D4/cat-d4-field.jpg',
+    images: [
+      '/images/gallery/CAT%20D4/cat-d4-field.jpg',
+      '/images/gallery/CAT%20D4/fuel-pump-repair.jpg',
+    ],
+  },
+  {
+    title: 'Fuel Systems Finished Up',
     category: 'Fuel System',
-    description: 'Diesel engine bay during fuel system repair showing line routing, filter placement, and pump access.',
-    height: 'h-80',
-    image: 'https://picsum.photos/seed/menco-11/900/800',
+    description: 'A few trucks wrapped up with complete fuel system work — from diagnostics and parts to final testing and calibration. Done right.',
+    bullets: ['Professional diagnostics', 'OEM & performance parts', 'Clean, precise installations', 'Quick turnaround times'],
+    height: 'h-[26rem]',
+    image: '/images/gallery/Couple%20Fuel%20Systems%20Finished%20Up/red-ford-exterior.jpg',
+    images: [
+      '/images/gallery/Couple%20Fuel%20Systems%20Finished%20Up/red-ford-exterior.jpg',
+      '/images/gallery/Couple%20Fuel%20Systems%20Finished%20Up/black-chevy-exterior.jpg',
+      '/images/gallery/Couple%20Fuel%20Systems%20Finished%20Up/engine-components.jpg',
+      '/images/gallery/Couple%20Fuel%20Systems%20Finished%20Up/fuel-system-parts.jpg',
+    ],
   },
   {
-    title: 'Completed Build Rollout',
-    category: 'Finished Work',
-    description: 'Completed truck leaving the shop after a full fuel system overhaul, ready for the road and heavy loads.',
-    height: 'h-[22rem]',
-    image: 'https://picsum.photos/seed/menco-12/900/950',
+    title: 'Ford Bronco — Running Boards',
+    category: 'Accessories',
+    description: 'Ford Bronco finished up with a set of electric running boards installed. Sleek, modern, and done right.',
+    height: 'h-[26rem]',
+    image: '/images/gallery/FordBronco/bronco-exterior.jpg',
+    images: ['/images/gallery/FordBronco/bronco-exterior.jpg'],
+  },
+  {
+    title: 'Knocking Out Jobs',
+    category: 'Shop Work',
+    description: 'Knocking out jobs and delivering quality work every single day. From start to finish, done with craftsmanship, efficiency, and attention to detail.',
+    height: 'h-[26rem]',
+    objectPosition: 'object-center',
+    image: '/images/gallery/Knocking%20out%20jobs/black-ford.jpg',
+    images: [
+      '/images/gallery/Knocking%20out%20jobs/black-ford.jpg',
+      '/images/gallery/Knocking%20out%20jobs/white-chevy.jpg',
+      '/images/gallery/Knocking%20out%20jobs/silver-truck.jpg',
+      '/images/gallery/Knocking%20out%20jobs/service-van.jpg',
+      '/images/gallery/Knocking%20out%20jobs/gray-ford.jpg',
+      '/images/gallery/Knocking%20out%20jobs/fleet-shot.jpg',
+    ],
   },
 ];
 ---
@@ -109,37 +102,47 @@ const galleryItems = [
 
   <section class="py-16 md:py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="columns-1 gap-6 sm:columns-2 xl:columns-3 [column-fill:_balance]">
-        {galleryItems.map((item, index) => (
-          <figure class="group card relative mb-6 break-inside-avoid overflow-hidden rounded-sm">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+        {galleryItems.map((item) => (
+          <figure class="group card overflow-hidden rounded-sm">
             <button
               type="button"
-              class={`gallery-card ${item.height} relative flex w-full items-end overflow-hidden bg-brand-dark text-left`}
+              class="gallery-card w-full h-full flex flex-col bg-brand-dark text-left"
               data-gallery-trigger
               data-title={item.title}
               data-category={item.category}
               data-description={item.description}
+              data-bullets={item.bullets ? JSON.stringify(item.bullets) : ''}
               data-image={item.image}
+              data-images={item.images ? JSON.stringify(item.images) : ''}
               aria-label={`Open ${item.title} in lightbox`}
             >
-              <img
-                src={item.image}
-                alt={`${item.title} — ${item.category}`}
-                loading="lazy"
-                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-              />
-              <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.25)_0%,rgba(10,10,10,0.55)_55%,rgba(10,10,10,0.92)_100%)]"></div>
-              <div class="absolute inset-0 opacity-60 mix-blend-multiply bg-[radial-gradient(circle_at_top_right,rgba(204,0,0,0.18),transparent_50%)]"></div>
-              <div class="absolute left-4 top-4 flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.32em] text-brand-light/70">
-                <span class="inline-block h-px w-8 bg-brand-red"></span>
-                #{String(index + 1).padStart(2, '0')}
+              <div class={`relative ${item.height} w-full overflow-hidden flex-shrink-0`}>
+                <img
+                  src={item.image}
+                  alt={`${item.title} — ${item.category}`}
+                  loading="lazy"
+                  class={`absolute inset-0 h-full w-full object-cover ${item.objectPosition ?? 'object-bottom'} transition-transform duration-500 ease-out group-hover:scale-[1.04]`}
+                />
+                <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.05)_0%,rgba(10,10,10,0.3)_100%)]"></div>
               </div>
-              <div class="relative z-10 w-full border-t border-white/10 bg-black/50 p-5 backdrop-blur-sm transition duration-200 group-hover:bg-black/65">
+              <div class="flex-1 w-full border-t border-white/10 bg-black/50 p-5 backdrop-blur-sm transition duration-200 group-hover:bg-black/65">
                 <p class="font-body text-xs uppercase tracking-[0.28em] text-brand-red">{item.category}</p>
                 <figcaption class="mt-2 font-heading text-2xl uppercase tracking-wide text-brand-light">
                   {item.title}
                 </figcaption>
-                <p class="mt-2 font-body text-sm leading-relaxed text-brand-gray">{item.description}</p>
+                {item.bullets ? (
+                  <ul class="mt-2 space-y-1 font-body text-sm text-brand-gray">
+                    {item.bullets.map((b) => (
+                      <li class="flex items-center gap-2">
+                        <span class="inline-block h-1 w-1 flex-shrink-0 rounded-full bg-brand-red"></span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="mt-2 font-body text-sm leading-relaxed text-brand-gray">{item.description}</p>
+                )}
               </div>
             </button>
           </figure>
@@ -169,29 +172,24 @@ const galleryItems = [
       <div class="grid gap-0 lg:grid-cols-[1.25fr_0.75fr]">
         <div class="relative min-h-[24rem] overflow-hidden bg-black">
           <img id="lightbox-image" src="" alt="" class="absolute inset-0 h-full w-full object-cover" />
-          <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.15)_0%,rgba(10,10,10,0.55)_60%,rgba(10,10,10,0.92)_100%)]"></div>
-          <div class="absolute inset-0 bg-gradient-to-br from-brand-red/15 via-transparent to-black/40"></div>
+          <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.05)_0%,rgba(10,10,10,0.25)_100%)]"></div>
           <div class="absolute left-6 top-6 border border-white/10 bg-black/60 px-3 py-2 font-body text-[0.68rem] uppercase tracking-[0.3em] text-brand-light/70">
             Gallery Preview
-          </div>
-          <div class="absolute bottom-6 left-6 right-6 border-t border-white/10 pt-4">
-            <p id="lightbox-category" class="font-body text-xs uppercase tracking-[0.3em] text-brand-red"></p>
-            <p id="lightbox-title" class="mt-2 font-heading text-4xl uppercase tracking-wide text-brand-light"></p>
           </div>
         </div>
 
         <div class="flex flex-col justify-between border-t border-white/10 p-6 lg:border-l lg:border-t-0">
           <div>
-            <p class="font-heading text-2xl uppercase tracking-wide text-brand-light">Project Notes</p>
+            <p id="lightbox-category" class="font-body text-xs uppercase tracking-[0.3em] text-brand-red"></p>
+            <p id="lightbox-title" class="mt-2 font-heading text-2xl uppercase tracking-wide text-brand-light"></p>
             <span class="red-accent-line"></span>
+            <ul id="lightbox-bullets" class="hidden mb-4 space-y-1.5 font-body text-sm text-brand-gray"></ul>
             <p id="lightbox-description" class="font-body text-base leading-relaxed text-brand-gray"></p>
+
+            <div id="lightbox-thumbnails" class="hidden mt-6 flex gap-2 flex-wrap"></div>
           </div>
 
-          <div class="mt-8 space-y-4 border-t border-white/10 pt-6 font-body text-sm text-brand-gray">
-            <p>
-              Need a real photo set here? Replace each placeholder card with final media assets and keep the same captions,
-              categories, and lightbox structure.
-            </p>
+          <div class="mt-8 border-t border-white/10 pt-6">
             <a href="/contact" class="btn-red w-full text-center sm:w-auto">Book Your Build</a>
           </div>
         </div>
@@ -204,10 +202,19 @@ const galleryItems = [
     const lightboxTitle = document.getElementById('lightbox-title');
     const lightboxCategory = document.getElementById('lightbox-category');
     const lightboxDescription = document.getElementById('lightbox-description');
+    const lightboxBullets = document.getElementById('lightbox-bullets');
+    const lightboxThumbnails = document.getElementById('lightbox-thumbnails');
     const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement | null;
     const triggers = document.querySelectorAll('[data-gallery-trigger]');
     const closers = document.querySelectorAll('[data-lightbox-close]');
     let previousActiveElement: HTMLElement | null = null;
+
+    const setActiveThumb = (thumbs: HTMLButtonElement[], active: HTMLButtonElement) => {
+      thumbs.forEach((t) => t.classList.remove('border-brand-red', 'opacity-100'));
+      thumbs.forEach((t) => t.classList.add('border-white/20', 'opacity-60'));
+      active.classList.remove('border-white/20', 'opacity-60');
+      active.classList.add('border-brand-red', 'opacity-100');
+    };
 
     const openLightbox = (trigger: HTMLElement | null) => {
       if (!(trigger instanceof HTMLElement) || !lightbox) return;
@@ -216,9 +223,53 @@ const galleryItems = [
       if (lightboxTitle) lightboxTitle.textContent = trigger.dataset.title ?? '';
       if (lightboxCategory) lightboxCategory.textContent = trigger.dataset.category ?? '';
       if (lightboxDescription) lightboxDescription.textContent = trigger.dataset.description ?? '';
+
+      if (lightboxBullets) {
+        const raw = trigger.dataset.bullets ?? '';
+        const bullets: string[] = raw ? JSON.parse(raw) : [];
+        if (bullets.length > 0) {
+          lightboxBullets.innerHTML = bullets
+            .map((b) => `<li class="flex items-center gap-2"><span class="inline-block h-1 w-1 flex-shrink-0 rounded-full bg-brand-red"></span>${b}</li>`)
+            .join('');
+          lightboxBullets.classList.remove('hidden');
+        } else {
+          lightboxBullets.innerHTML = '';
+          lightboxBullets.classList.add('hidden');
+        }
+      }
+
+      const primaryImage = trigger.dataset.image ?? '';
       if (lightboxImage) {
-        lightboxImage.src = trigger.dataset.image ?? '';
+        lightboxImage.src = primaryImage;
         lightboxImage.alt = trigger.dataset.title ?? '';
+      }
+
+      if (lightboxThumbnails) {
+        const rawImages = trigger.dataset.images ?? '';
+        const images: string[] = rawImages ? JSON.parse(rawImages) : [];
+        if (images.length > 1) {
+          const thumbButtons: HTMLButtonElement[] = images.map((src) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'h-16 w-20 flex-shrink-0 overflow-hidden border-2 border-white/20 opacity-60 transition hover:opacity-100 hover:border-brand-red';
+            btn.innerHTML = `<img src="${src}" alt="" class="h-full w-full object-cover" loading="lazy" />`;
+            btn.addEventListener('click', () => {
+              if (lightboxImage) {
+                lightboxImage.src = src;
+                lightboxImage.alt = trigger.dataset.title ?? '';
+              }
+              setActiveThumb(thumbButtons, btn);
+            });
+            return btn;
+          });
+          lightboxThumbnails.innerHTML = '';
+          thumbButtons.forEach((btn) => lightboxThumbnails.appendChild(btn));
+          setActiveThumb(thumbButtons, thumbButtons[0]);
+          lightboxThumbnails.classList.remove('hidden');
+        } else {
+          lightboxThumbnails.innerHTML = '';
+          lightboxThumbnails.classList.add('hidden');
+        }
       }
 
       lightbox.classList.remove('hidden');
