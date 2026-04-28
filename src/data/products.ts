@@ -34,28 +34,9 @@ export const products: Product[] = [
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
   },
   {
-    id: 'merch-002',
-    slug: 'menco-hoodie',
-    name: 'Menco Hoodie',
-    price: 45.0,
-    category: 'Merch',
-    description:
-      'Black hoodie with embroidered Menco Motorsports logo. Heavy weight, built for the shop.',
-    details: [
-      'Black heavyweight hoodie',
-      'Embroidered Menco Motorsports logo',
-      'Available in S, M, L, XL, 2XL',
-      'Pay on pickup at the shop',
-    ],
-    image: '/favicon.svg',
-    inStock: true,
-    featured: true,
-    sizes: ['S', 'M', 'L', 'XL', '2XL'],
-  },
-  {
     id: 'merch-003',
     slug: 'menco-snapback',
-    name: 'Menco Snapback',
+    name: 'Menco Snapback Hat',
     price: 30.0,
     category: 'Merch',
     description:
