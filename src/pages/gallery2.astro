@@ -1,0 +1,209 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const builds = [
+  {
+    title: '2018 Ford 6.7L — DCR Conversion',
+    subtitle: 'Full Reliability & Performance Build',
+    before: {
+      image: '/images/gallery/2018%20Ford%206.7L/engine-bay.jpg',
+      label: 'Before',
+      caption: 'Stock fuel system with aging components. CP4 pump at risk of catastrophic failure.',
+    },
+    process: [
+      'Full DCR pump conversion',
+      'CCV upgrade and ventilation reroute',
+      'Select power mods for reliability',
+      'New bearing and hub assemblies',
+    ],
+    after: {
+      image: '/images/gallery/2018%20Ford%206.7L/truck-exterior.jpg',
+      label: 'After',
+      caption: 'Reliable fuel system, improved crankcase ventilation, refreshed front end. Done right.',
+    },
+    detail: '/images/gallery/2018%20Ford%206.7L/turbo-closeup.jpg',
+  },
+  {
+    title: '2019 F-250 — Prevention Kit',
+    subtitle: 'Preventative Maintenance Package',
+    before: {
+      image: '/images/gallery/2019%20F-250/intake-dirty.jpg',
+      label: 'Before',
+      caption: 'Contaminated intake and worn CCV filter. CP4 running unprotected.',
+    },
+    process: [
+      'S&S Disaster Prevention Kit installed',
+      'CCV filter replaced',
+      'Full intake cleaning',
+      'System tested and verified',
+    ],
+    after: {
+      image: '/images/gallery/2019%20F-250/intake-clean.jpg',
+      label: 'After',
+      caption: 'Clean intake, new CCV filter, CP4 protected. Ready for many more miles.',
+    },
+    detail: '/images/gallery/2019%20F-250/truck-exterior.jpg',
+  },
+  {
+    title: 'CAT D4 — Field Service',
+    subtitle: 'Heavy Equipment Fuel Pump Replacement',
+    before: {
+      image: '/images/gallery/CAT%20D4/cat-d4-field.jpg',
+      label: 'On Site',
+      caption: 'Service call out in the field. CAT D4 down with a failed fuel pump.',
+    },
+    process: [
+      'On-site diagnostics',
+      'Fuel pump removal',
+      'New pump installed and primed',
+      'System tested under load',
+    ],
+    after: {
+      image: '/images/gallery/CAT%20D4/fuel-pump-repair.jpg',
+      label: 'Repaired',
+      caption: 'New fuel pump installed in the field. Back up and running strong.',
+    },
+    detail: null,
+  },
+  {
+    title: 'Fuel System Overhauls',
+    subtitle: 'Multiple Trucks — Complete Fuel Work',
+    before: {
+      image: '/images/gallery/Couple%20Fuel%20Systems%20Finished%20Up/engine-components.jpg',
+      label: 'Teardown',
+      caption: 'Components pulled for inspection. Diagnosing fuel delivery issues across multiple trucks.',
+    },
+    process: [
+      'Professional fuel system diagnostics',
+      'OEM and performance parts sourced',
+      'Clean, precise installations',
+      'Final testing and calibration',
+    ],
+    after: {
+      image: '/images/gallery/Couple%20Fuel%20Systems%20Finished%20Up/red-ford-exterior.jpg',
+      label: 'Complete',
+      caption: 'Trucks wrapped up and rolling out. From diagnostics to parts to final testing. Done right.',
+    },
+    detail: '/images/gallery/Couple%20Fuel%20Systems%20Finished%20Up/fuel-system-parts.jpg',
+  },
+];
+---
+
+<Layout
+  title="Gallery"
+  description="Before and after diesel builds from Menco Motorsports. See the process from teardown to completion."
+>
+  <!-- Hero -->
+  <section class="border-b border-white/10 bg-gradient-to-b from-brand-dark to-brand-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+      <p class="font-body text-sm uppercase tracking-[0.35em] text-brand-red">The Work</p>
+      <h1 class="section-heading mt-4">From Problem to Solution</h1>
+      <span class="red-accent-line"></span>
+      <p class="max-w-3xl font-body text-brand-gray text-lg leading-relaxed">
+        Every build tells a story. Here's what came in, what we did, and how it left.
+        Real trucks, real problems, real fixes.
+      </p>
+    </div>
+  </section>
+
+  <!-- Builds -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {builds.map((build, i) => (
+        <article class={`${i > 0 ? 'mt-20 pt-20 border-t border-white/10' : ''}`}>
+          <!-- Build Header -->
+          <div class="text-center mb-12">
+            <p class="font-body text-xs uppercase tracking-[0.35em] text-brand-red mb-2">{build.subtitle}</p>
+            <h2 class="font-heading text-4xl md:text-5xl text-brand-light uppercase">{build.title}</h2>
+            <span class="red-accent-line mx-auto mt-3 mb-0"></span>
+          </div>
+
+          <!-- Before / Process / After Flow -->
+          <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-0 items-stretch">
+
+            <!-- BEFORE -->
+            <div class="bg-brand-dark border border-white/10 overflow-hidden">
+              <div class="relative h-64 sm:h-80 overflow-hidden">
+                <img src={build.before.image} alt={`${build.title} — ${build.before.label}`} loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+                <div class="absolute top-4 left-4 bg-black/70 border border-white/10 px-3 py-1.5 font-body text-[0.68rem] uppercase tracking-[0.3em] text-brand-light">{build.before.label}</div>
+              </div>
+              <div class="p-5">
+                <p class="font-body text-sm text-brand-gray leading-relaxed">{build.before.caption}</p>
+              </div>
+            </div>
+
+            <!-- PROCESS (center column) -->
+            <div class="relative flex flex-col items-center justify-center px-6 py-8 lg:py-0 lg:px-8">
+              <!-- Vertical line -->
+              <div class="hidden lg:block absolute inset-y-0 left-1/2 w-px bg-brand-red/30 -translate-x-1/2"></div>
+              <!-- Mobile horizontal line -->
+              <div class="lg:hidden w-full h-px bg-brand-red/30 mb-6"></div>
+
+              <div class="relative z-10 bg-brand-black border border-brand-red/30 px-6 py-5 w-full lg:w-56">
+                <p class="font-heading text-lg text-brand-red uppercase tracking-wider text-center mb-4">What We Did</p>
+                <ul class="space-y-2.5">
+                  {build.process.map((step) => (
+                    <li class="flex items-start gap-2.5">
+                      <span class="mt-1.5 h-2 w-2 rounded-full bg-brand-red shrink-0"></span>
+                      <span class="font-body text-sm text-brand-light leading-snug">{step}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- Arrows -->
+              <div class="hidden lg:flex flex-col items-center gap-1 mt-4">
+                <svg class="w-5 h-5 text-brand-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              </div>
+
+              <!-- Mobile horizontal line -->
+              <div class="lg:hidden w-full h-px bg-brand-red/30 mt-6"></div>
+            </div>
+
+            <!-- AFTER -->
+            <div class="bg-brand-dark border border-white/10 overflow-hidden">
+              <div class="relative h-64 sm:h-80 overflow-hidden">
+                <img src={build.after.image} alt={`${build.title} — ${build.after.label}`} loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+                <div class="absolute top-4 right-4 bg-brand-red/90 border border-brand-red px-3 py-1.5 font-body text-[0.68rem] uppercase tracking-[0.3em] text-white">{build.after.label}</div>
+              </div>
+              <div class="p-5">
+                <p class="font-body text-sm text-brand-gray leading-relaxed">{build.after.caption}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Detail shot (if available) -->
+          {build.detail && (
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="h-48 overflow-hidden border border-white/10">
+                <img src={build.detail} alt={`${build.title} — detail`} loading="lazy" class="h-full w-full object-cover" />
+              </div>
+              <div class="h-48 overflow-hidden border border-white/10 flex items-center justify-center bg-brand-dark">
+                <div class="text-center px-6">
+                  <p class="font-heading text-2xl text-brand-light uppercase">Done Right.</p>
+                  <p class="font-body text-sm text-brand-gray mt-2">Every time.</p>
+                  <a href="/contact" class="btn-red inline-block mt-4 text-xs py-2 px-4">Request Service</a>
+                </div>
+              </div>
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative overflow-hidden border-t border-white/10 bg-brand-red">
+    <div class="absolute inset-0 opacity-30 bg-[repeating-linear-gradient(135deg,rgba(0,0,0,0.25)_0,rgba(0,0,0,0.25)_2px,transparent_2px,transparent_14px)]"></div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 text-center">
+      <h2 class="font-heading text-4xl md:text-5xl text-white uppercase">Your Truck Is Next</h2>
+      <p class="mt-4 font-body text-white/80 text-lg max-w-2xl mx-auto">
+        Whether it's diagnostics, a fuel system overhaul, or a full performance build, we handle it start to finish.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/contact" class="bg-white text-brand-red font-body font-semibold px-6 py-3 uppercase tracking-wider text-sm transition-all duration-200 hover:bg-brand-black hover:text-white">Request Service</a>
+        <a href="tel:3372886226" class="border-2 border-white text-white font-body font-semibold px-6 py-3 uppercase tracking-wider text-sm transition-all duration-200 hover:bg-white hover:text-brand-red">Call (337) 288-6226</a>
+      </div>
+    </div>
+  </section>
+</Layout>
