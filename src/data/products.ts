@@ -70,24 +70,6 @@ export const products: Product[] = [
     inStock: true,
     featured: true,
   },
-  // ──── MISC ────
-  {
-    id: 'misc-001',
-    slug: 'menco-misc',
-    name: 'More Coming Soon',
-    price: 0,
-    category: 'Misc.',
-    description:
-      'More parts, gear, and accessories coming soon. Follow us on Facebook or contact the shop for the latest.',
-    details: [
-      'New products added regularly',
-      'Follow us on Facebook for announcements',
-      'Call the shop for special requests',
-    ],
-    image: '/favicon.svg',
-    inStock: false,
-    featured: false,
-  },
 ];
 
 export function getProductBySlug(slug: string): Product | undefined {
