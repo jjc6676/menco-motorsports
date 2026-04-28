@@ -23,7 +23,7 @@ import Layout from '../layouts/Layout.astro';
       <div id="cart-content" style="display:none;">
         <div id="cart-items"></div>
 
-        <div class="card mt-8 p-6 sm:p-8">
+        <div class="bg-brand-dark border border-white/10 mt-8 p-6 sm:p-8">
           <div class="flex items-center justify-between">
             <div>
               <p class="font-heading text-2xl text-brand-light uppercase">Total</p>
@@ -33,7 +33,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
 
-        <div class="card mt-8 p-6 sm:p-8">
+        <div class="bg-brand-dark border border-white/10 mt-8 p-6 sm:p-8">
           <p class="font-heading text-2xl text-brand-light uppercase">Your Info</p>
           <span class="red-accent-line"></span>
           <p class="text-brand-gray text-sm mb-6">We'll text or call when your order is ready for pickup.</p>
@@ -88,7 +88,7 @@ import Layout from '../layouts/Layout.astro';
     contentEl.style.display = 'block';
 
     itemsEl.innerHTML = items.map(item => `
-      <div class="card mb-3 p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div class="bg-[#111] border border-[rgba(255,255,255,0.1)] mb-3 p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <p class="font-heading text-xl text-[#f5f5f5] uppercase">${item.name}</p>
           ${item.size ? `<span class="text-xs uppercase tracking-[0.2em] text-[#999]">Size: ${item.size}</span>` : ''}
