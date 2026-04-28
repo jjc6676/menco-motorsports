@@ -135,11 +135,16 @@ import Layout from '../layouts/Layout.astro';
               ></textarea>
             </label>
 
-            <div class="sm:col-span-2 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-              <p class="max-w-xl font-body text-sm leading-relaxed text-brand-gray">
-                Prefer to call instead? Tap the number in the contact panel and talk through your build, repair, or scheduling needs directly.
+            <div class="sm:col-span-2 border-t border-white/10 pt-6">
+              <p class="font-body text-xs leading-relaxed text-brand-gray/70 mb-4">
+                This is a service request, not a quote or estimate. We'll reach out within 24-48 hours to discuss your truck, ask any follow-up questions, and talk through next steps and pricing in person or over the phone. Final pricing is determined after inspection.
               </p>
-              <button type="submit" id="submit-btn" class="btn-red w-full text-center sm:w-auto">Send Request</button>
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p class="font-body text-sm text-brand-gray">
+                  Prefer to call? <a href="tel:3372886226" class="text-brand-red hover:text-brand-redHot">(337) 288-6226</a>
+                </p>
+                <button type="submit" id="submit-btn" class="btn-red w-full text-center sm:w-auto">Send Request</button>
+              </div>
             </div>
             <div id="form-status" class="sm:col-span-2 mt-4 font-body text-sm"></div>
           </form>
