@@ -96,15 +96,15 @@ const faqs = [
         </div>
 
         <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl">
-          <div class="card p-5">
+          <div class="bg-brand-dark border border-white/10 p-5">
             <p class="font-heading text-3xl text-brand-light">Powerstroke</p>
             <p class="mt-2 text-sm text-brand-gray">Ford diesel repair, diagnostics, and upgrade planning for trucks that have to perform.</p>
           </div>
-          <div class="card p-5">
+          <div class="bg-brand-dark border border-white/10 p-5">
             <p class="font-heading text-3xl text-brand-light">Duramax</p>
             <p class="mt-2 text-sm text-brand-gray">GM diesel service and performance support focused on real-world drivability and dependability.</p>
           </div>
-          <div class="card p-5">
+          <div class="bg-brand-dark border border-white/10 p-5">
             <p class="font-heading text-3xl text-brand-light">Cummins</p>
             <p class="mt-2 text-sm text-brand-gray">Ram diesel expertise for work trucks, tow rigs, and builds that need a smarter path forward.</p>
           </div>
@@ -206,7 +206,7 @@ const faqs = [
           </p>
         </div>
 
-        <div class="card p-6 md:p-8">
+        <div class="bg-brand-dark border border-white/10 p-6 md:p-8">
           <ul class="space-y-4 text-brand-gray">
             <li class="flex gap-3">
               <span class="mt-2 h-2 w-2 rounded-full bg-brand-red shrink-0"></span>
@@ -240,7 +240,7 @@ const faqs = [
 
       <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
         {testimonials.map((testimonial) => (
-          <blockquote class="card p-6 flex flex-col h-full">
+          <blockquote class="bg-brand-dark border border-white/10 p-6 flex flex-col h-full">
             <p class="text-brand-light text-lg leading-relaxed">“{testimonial.quote}”</p>
             <footer class="mt-6 text-sm uppercase tracking-[0.2em] text-brand-red">{testimonial.name}</footer>
           </blockquote>
@@ -261,7 +261,7 @@ const faqs = [
 
       <div class="mt-12 space-y-4">
         {faqs.map((faq, index) => (
-          <details class="card group p-0 overflow-hidden" open={index === 0}>
+          <details class="bg-brand-dark border border-white/10 group p-0 overflow-hidden" open={index === 0}>
             <summary class="list-none cursor-pointer px-6 py-5 flex items-center justify-between gap-4 text-left">
               <span class="font-body text-base md:text-lg font-semibold text-brand-light">{faq.question}</span>
               <span class="text-brand-red text-2xl leading-none transition-transform group-open:rotate-45">+</span>
