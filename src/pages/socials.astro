@@ -1,40 +1,60 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const galleryPhotos = [
+  '/images/gallery/2018%20Ford%206.7L/truck-exterior.jpg',
+  '/images/gallery/2018%20Ford%206.7L/engine-bay.jpg',
+  '/images/gallery/2018%20Ford%206.7L/turbo-closeup.jpg',
+  '/images/gallery/2019%20F-250/truck-exterior.jpg',
+  '/images/gallery/2019%20F-250/ccv-filter.jpg',
+  '/images/gallery/2019%20F-250/intake-clean.jpg',
+  '/images/gallery/CAT%20D4/cat-d4-field.jpg',
+  '/images/gallery/CAT%20D4/fuel-pump-repair.jpg',
+  '/images/gallery/FordBronco/bronco-exterior.jpg',
+  '/images/gallery/Knocking%20out%20jobs/black-ford.jpg',
+  '/images/gallery/Knocking%20out%20jobs/white-chevy.jpg',
+  '/images/gallery/Knocking%20out%20jobs/silver-truck.jpg',
+  '/images/gallery/Couple%20Fuel%20Systems%20Finished%20Up/red-ford-exterior.jpg',
+  '/images/gallery/Couple%20Fuel%20Systems%20Finished%20Up/black-chevy-exterior.jpg',
+  '/images/gallery/Couple%20Fuel%20Systems%20Finished%20Up/engine-components.jpg',
+  '/images/gallery/Knocking%20out%20jobs/service-van.jpg',
+];
 ---
 
-<Layout title="Social Section Options — Menco Motorsports">
-  <!-- Page Hero -->
+<Layout title="Social Section Options">
   <section class="bg-brand-black py-20 text-center">
     <p class="font-body text-xs uppercase tracking-[0.4em] text-brand-red mb-4">Demo Page</p>
     <h1 class="font-heading text-5xl md:text-6xl text-brand-light uppercase mb-4">Social Section Options</h1>
-    <p class="font-body text-brand-gray max-w-xl mx-auto">Pick which style you want on the homepage.</p>
+    <p class="font-body text-brand-gray max-w-xl mx-auto">Pick which style you want on the homepage. These use your real gallery photos.</p>
   </section>
 
   <!-- ============================================================ -->
-  <!-- OPTION A: Live Instagram Grid (mockup) -->
+  <!-- OPTION A: Instagram Grid -->
   <!-- ============================================================ -->
   <section class="bg-brand-black px-4 md:px-8">
     <div class="border-t border-brand-red/30 pt-12 mt-12">
       <p class="text-center font-body text-xs uppercase tracking-[0.4em] text-brand-red mb-2">Option A</p>
-      <p class="text-center font-heading text-3xl text-brand-light uppercase mb-8">Live Instagram Grid</p>
+      <p class="text-center font-heading text-3xl text-brand-light uppercase mb-4">Instagram Grid</p>
+    </div>
+
+    <div class="max-w-3xl mx-auto mb-6 border border-brand-red/40 bg-brand-red/5 px-6 py-4">
+      <p class="font-body text-sm text-brand-light"><strong class="text-brand-red">REQUIRES:</strong> Instagram API token from Meta Developer Portal. Token refreshes every 60 days. Once set up, this grid auto-pulls your latest 8 posts from @menco_motorsports. Currently showing gallery photos as preview.</p>
     </div>
 
     <div class="max-w-6xl mx-auto pb-16">
       <p class="font-heading text-lg uppercase tracking-widest text-brand-light mb-6 text-center">
         Instagram &mdash; <a href="https://www.instagram.com/menco_motorsports/" target="_blank" rel="noopener" class="text-brand-red hover:underline">@menco_motorsports</a>
       </p>
-
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {[1,2,3,4,5,6,7,8].map((n) => (
-          <div class="aspect-square bg-brand-dark border border-white/10 rounded flex items-center justify-center">
-            <span class="font-body text-sm text-brand-gray">Recent Post {n}</span>
-          </div>
+        {galleryPhotos.slice(0, 8).map((src) => (
+          <a href="https://www.instagram.com/menco_motorsports/" target="_blank" rel="noopener" class="aspect-square overflow-hidden border border-white/10 group">
+            <img src={src} alt="Menco Motorsports shop work" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.05]" />
+          </a>
         ))}
       </div>
-
-      <p class="font-body text-xs text-brand-gray/60 text-center mt-6 italic">
-        Requires Instagram API token. Auto-updates with latest posts.
-      </p>
+      <div class="text-center mt-6">
+        <a href="https://www.instagram.com/menco_motorsports/" target="_blank" rel="noopener" class="btn-outline text-xs">Follow @menco_motorsports</a>
+      </div>
     </div>
   </section>
 
@@ -44,31 +64,24 @@ import Layout from '../layouts/Layout.astro';
   <section class="bg-brand-black px-4 md:px-8">
     <div class="border-t border-brand-red/30 pt-12 mt-12">
       <p class="text-center font-body text-xs uppercase tracking-[0.4em] text-brand-red mb-2">Option C</p>
-      <p class="text-center font-heading text-3xl text-brand-light uppercase mb-8">Static Social Bar</p>
+      <p class="text-center font-heading text-3xl text-brand-light uppercase mb-4">Static Social Bar</p>
+    </div>
+
+    <div class="max-w-3xl mx-auto mb-6 border border-emerald-500/40 bg-emerald-500/5 px-6 py-4">
+      <p class="font-body text-sm text-brand-light"><strong class="text-emerald-400">READY TO USE:</strong> No API needed. Just links to your Facebook and Instagram. Simple, clean, works immediately.</p>
     </div>
 
     <div class="max-w-4xl mx-auto pb-16">
-      <div class="border-t border-white/10 bg-brand-dark/50 py-6 px-8 rounded flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
-        <!-- Facebook -->
+      <div class="border-t border-white/10 bg-brand-dark/50 py-6 px-8 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
         <a href="https://www.facebook.com/p/Menco-Motorsports-61558910277885/" target="_blank" rel="noopener" class="flex items-center gap-3 text-brand-light hover:text-brand-red transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M24 12.073c0-6.627-5.373-12-12-12S0 5.446 0 12.073c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12S0 5.446 0 12.073c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           <span class="font-body text-sm uppercase tracking-wider">Facebook</span>
         </a>
-
-        <!-- Instagram -->
         <a href="https://www.instagram.com/menco_motorsports/" target="_blank" rel="noopener" class="flex items-center gap-3 text-brand-light hover:text-brand-red transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           <span class="font-body text-sm uppercase tracking-wider">Instagram</span>
         </a>
-
-        <!-- CTA -->
-        <a href="https://www.instagram.com/menco_motorsports/" target="_blank" rel="noopener" class="btn-red ml-0 md:ml-auto">
-          Follow the Build
-        </a>
+        <a href="https://www.instagram.com/menco_motorsports/" target="_blank" rel="noopener" class="btn-red ml-0 md:ml-auto">Follow the Build</a>
       </div>
     </div>
   </section>
@@ -79,20 +92,23 @@ import Layout from '../layouts/Layout.astro';
   <section class="bg-brand-black px-4 md:px-8">
     <div class="border-t border-brand-red/30 pt-12 mt-12">
       <p class="text-center font-body text-xs uppercase tracking-[0.4em] text-brand-red mb-2">Option D</p>
-      <p class="text-center font-heading text-3xl text-brand-light uppercase mb-8">Horizontal Scrolling Photo Strip</p>
+      <p class="text-center font-heading text-3xl text-brand-light uppercase mb-4">Scrolling Photo Strip</p>
+    </div>
+
+    <div class="max-w-3xl mx-auto mb-6 border border-emerald-500/40 bg-emerald-500/5 px-6 py-4">
+      <p class="font-body text-sm text-brand-light"><strong class="text-emerald-400">READY TO USE:</strong> No API needed. Drop photos into <code class="text-brand-red">public/images/social/</code> and they show up here. Currently using your gallery photos. Auto-scrolls, pauses on hover.</p>
     </div>
 
     <div class="overflow-hidden pb-16">
       <div class="flex gap-4 animate-scroll-left">
-        {["Shop Photo 1","Truck Build 2","Engine Swap 3","Turbo Install 4","Dyno Run 5","Lift Kit 6","Delete Job 7","Custom Fab 8","Tow Rig 9","Road Test 10"].map((label) => (
-          <div class="h-64 w-80 flex-shrink-0 bg-brand-dark border border-white/10 rounded flex items-center justify-center">
-            <span class="font-body text-sm text-brand-gray">{label}</span>
+        {galleryPhotos.map((src) => (
+          <div class="h-64 w-80 flex-shrink-0 overflow-hidden border border-white/10">
+            <img src={src} alt="Menco Motorsports" loading="lazy" class="h-full w-full object-cover" />
           </div>
         ))}
-        {/* Duplicate set for seamless loop */}
-        {["Shop Photo 1","Truck Build 2","Engine Swap 3","Turbo Install 4","Dyno Run 5","Lift Kit 6","Delete Job 7","Custom Fab 8","Tow Rig 9","Road Test 10"].map((label) => (
-          <div class="h-64 w-80 flex-shrink-0 bg-brand-dark border border-white/10 rounded flex items-center justify-center">
-            <span class="font-body text-sm text-brand-gray">{label}</span>
+        {galleryPhotos.map((src) => (
+          <div class="h-64 w-80 flex-shrink-0 overflow-hidden border border-white/10">
+            <img src={src} alt="Menco Motorsports" loading="lazy" class="h-full w-full object-cover" />
           </div>
         ))}
       </div>
@@ -105,55 +121,45 @@ import Layout from '../layouts/Layout.astro';
   <section class="bg-brand-black px-4 md:px-8 pb-20">
     <div class="border-t border-brand-red/30 pt-12 mt-12">
       <p class="text-center font-body text-xs uppercase tracking-[0.4em] text-brand-red mb-2">Option E</p>
-      <p class="text-center font-heading text-3xl text-brand-light uppercase mb-8">Photo Strip + Social Icons Combined</p>
+      <p class="text-center font-heading text-3xl text-brand-light uppercase mb-4">Photo Strip + Social Icons Combined</p>
     </div>
 
-    <!-- Section Header -->
+    <div class="max-w-3xl mx-auto mb-6 border border-emerald-500/40 bg-emerald-500/5 px-6 py-4">
+      <p class="font-body text-sm text-brand-light"><strong class="text-emerald-400">READY TO USE:</strong> Best of both. Scrolling photos from <code class="text-brand-red">public/images/social/</code> + social links below. No API needed. Currently using gallery photos.</p>
+    </div>
+
     <div class="text-center mb-8">
       <p class="font-body text-xs uppercase tracking-[0.4em] text-brand-red mb-2">Follow the Build</p>
       <h2 class="section-heading">See What's Happening in the Shop</h2>
-      <div class="red-accent-line mx-auto mt-4"></div>
+      <div class="flex justify-center"><span class="red-accent-line"></span></div>
     </div>
 
-    <!-- Scrolling Strip -->
     <div class="overflow-hidden mb-10">
       <div class="flex gap-4 animate-scroll-left">
-        {["Shop Photo 1","Truck Build 2","Engine Swap 3","Turbo Install 4","Dyno Run 5","Lift Kit 6","Delete Job 7","Custom Fab 8","Tow Rig 9","Road Test 10"].map((label) => (
-          <div class="h-64 w-80 flex-shrink-0 bg-brand-dark border border-white/10 rounded flex items-center justify-center">
-            <span class="font-body text-sm text-brand-gray">{label}</span>
+        {galleryPhotos.map((src) => (
+          <div class="h-64 w-80 flex-shrink-0 overflow-hidden border border-white/10">
+            <img src={src} alt="Menco Motorsports" loading="lazy" class="h-full w-full object-cover" />
           </div>
         ))}
-        {["Shop Photo 1","Truck Build 2","Engine Swap 3","Turbo Install 4","Dyno Run 5","Lift Kit 6","Delete Job 7","Custom Fab 8","Tow Rig 9","Road Test 10"].map((label) => (
-          <div class="h-64 w-80 flex-shrink-0 bg-brand-dark border border-white/10 rounded flex items-center justify-center">
-            <span class="font-body text-sm text-brand-gray">{label}</span>
+        {galleryPhotos.map((src) => (
+          <div class="h-64 w-80 flex-shrink-0 overflow-hidden border border-white/10">
+            <img src={src} alt="Menco Motorsports" loading="lazy" class="h-full w-full object-cover" />
           </div>
         ))}
       </div>
     </div>
 
-    <!-- Social Bar -->
     <div class="max-w-4xl mx-auto">
-      <div class="border-t border-white/10 bg-brand-dark/50 py-6 px-8 rounded flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
-        <!-- Facebook -->
+      <div class="border-t border-white/10 bg-brand-dark/50 py-6 px-8 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
         <a href="https://www.facebook.com/p/Menco-Motorsports-61558910277885/" target="_blank" rel="noopener" class="flex items-center gap-3 text-brand-light hover:text-brand-red transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M24 12.073c0-6.627-5.373-12-12-12S0 5.446 0 12.073c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12S0 5.446 0 12.073c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           <span class="font-body text-sm uppercase tracking-wider">Facebook</span>
         </a>
-
-        <!-- Instagram -->
         <a href="https://www.instagram.com/menco_motorsports/" target="_blank" rel="noopener" class="flex items-center gap-3 text-brand-light hover:text-brand-red transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           <span class="font-body text-sm uppercase tracking-wider">Instagram</span>
         </a>
-
-        <!-- CTA -->
-        <a href="https://www.instagram.com/menco_motorsports/" target="_blank" rel="noopener" class="btn-red ml-0 md:ml-auto">
-          Follow the Build
-        </a>
+        <a href="https://www.instagram.com/menco_motorsports/" target="_blank" rel="noopener" class="btn-red ml-0 md:ml-auto">Follow the Build</a>
       </div>
     </div>
   </section>
@@ -161,18 +167,12 @@ import Layout from '../layouts/Layout.astro';
 
 <style>
   @keyframes scroll-left {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
-
   .animate-scroll-left {
     animation: scroll-left 30s linear infinite;
   }
-
   .animate-scroll-left:hover {
     animation-play-state: paused;
   }
