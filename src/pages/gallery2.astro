@@ -172,21 +172,12 @@ const builds = [
             </div>
           </div>
 
-          <!-- Detail shot (if available) -->
-          {build.detail && (
-            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="h-48 overflow-hidden border border-white/10">
-                <img src={build.detail} alt={`${build.title} — detail`} loading="lazy" class="h-full w-full object-cover" />
-              </div>
-              <div class="h-48 overflow-hidden border border-white/10 flex items-center justify-center bg-brand-dark">
-                <div class="text-center px-6">
-                  <p class="font-heading text-2xl text-brand-light uppercase">Done Right.</p>
-                  <p class="font-body text-sm text-brand-gray mt-2">Every time.</p>
-                  <a href="/contact" class="btn-red inline-block mt-4 text-xs py-2 px-4">Request Service</a>
-                </div>
-              </div>
-            </div>
-          )}
+          <!-- Done Right callout -->
+          <div class="mt-8 text-center">
+            <p class="font-heading text-2xl text-brand-light uppercase">Done Right.</p>
+            <p class="font-body text-sm text-brand-gray mt-1">Every time.</p>
+            <a href="/contact" class="btn-red inline-block mt-4 text-xs py-2 px-4">Request Service</a>
+          </div>
         </article>
       ))}
     </div>
